@@ -1,0 +1,33 @@
+{
+  "name": "California",
+  "abbr": "CA",
+  "rightOfPublicity": "Statutory + common law",
+  "postMortem": "Yes — 70 years (Cal. Civ. Code § 3344.1)",
+  "aiCoverage": "Explicit (AB 2602, AB 1836, SB 926 enacted 2024)",
+  "strength": "explicit",
+  "summary": "Among the most protective regimes in the US. Explicit AI digital-replica rights for performers (AB 2602), post-mortem digital replica protection (AB 1836), and criminal penalties for non-consensual sexual deepfakes.",
+  "keyLegislation": [
+    {
+      "title": "Cal. Civ. Code § 3344 (right of publicity, living)",
+      "url": "https://leginfo.legislature.ca.gov/"
+    },
+    {
+      "title": "Cal. Civ. Code § 3344.1 (post-mortem)",
+      "url": "https://leginfo.legislature.ca.gov/"
+    },
+    {
+      "title": "AB 2602 (2024) — AI digital replicas in employment contracts",
+      "url": "https://leginfo.legislature.ca.gov/"
+    },
+    {
+      "title": "AB 1836 (2024) — post-mortem digital replica rights",
+      "url": "https://leginfo.legislature.ca.gov/"
+    }
+  ],
+  "notableCases": [
+    {
+      "title": "TBD — recent AI likeness enforcement to be added."
+    }
+  ],
+  "lastUpdated": "2026-04-19"
+}

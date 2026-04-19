@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const doors = [
+  {
+    href: '/map',
+    label: 'The Map',
+    tag: '50 states',
+    blurb: 'Where does your likeness live? State-by-state posture on right of publicity, post-mortem protection, and explicit AI coverage.',
+  },
+  {
+    href: '/clock',
+    label: 'The Clock',
+    tag: 'Live',
+    blurb: 'How long has it been since the last flagged unauthorized AI likeness incident? Spoiler: not long.',
+  },
+  {
+    href: '/feed',
+    label: 'The Feed',
+    tag: 'Field notes',
+    blurb: 'What just happened — a curated, editorial feed of industry news about AI and likeness rights, with commentary.',
+  },
+];
+---
+<Layout title="dudewheresmylikeness.com — a public watchtower for AI likeness rights">
+  <section class="max-w-3xl mx-auto px-6 pt-20 pb-10">
+    <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)] mb-6">
+      A public watchtower for AI likeness rights
+    </p>
+    <h1 class="font-serif text-5xl md:text-6xl leading-[1.05] tracking-tight">
+      What the laws are, how fast the world is moving, and what just happened.
+    </h1>
+    <p class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl">
+      Built by Daniel Etzioni, drawing on executive interviews at CAA, WME, and UTA
+      about AI likeness rights and digital consent infrastructure.
+    </p>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 pb-24">
+    <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)]">
+      {doors.map((door) => (
+        <a
+          href={door.href}
+          class="group bg-[var(--color-paper)] p-8 no-underline flex flex-col justify-between min-h-[260px] hover:bg-white transition-colors"
+        >
+          <div>
+            <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">{door.tag}</p>
+            <h2 class="mt-3 font-serif text-3xl group-hover:text-[var(--color-accent)] transition-colors">
+              {door.label}
+            </h2>
+            <p class="mt-3 text-sm text-[var(--color-muted)] leading-relaxed">{door.blurb}</p>
+          </div>
+          <span class="mt-6 text-xs uppercase tracking-wider text-[var(--color-ink)]">
+            Enter &rarr;
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

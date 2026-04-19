@@ -1,0 +1,24 @@
+{
+  "name": "Tennessee",
+  "abbr": "TN",
+  "rightOfPublicity": "Statutory (ELVIS Act / Personal Rights Protection Act)",
+  "postMortem": "Yes — indefinite, commercially exploited (Tenn. Code Ann. § 47-25-1104)",
+  "aiCoverage": "Explicit (ELVIS Act, 2024) — covers voice and image, living and dead",
+  "strength": "explicit",
+  "summary": "The ELVIS Act (Ensuring Likeness, Voice, and Image Security Act) made Tennessee the first state to explicitly include voice in its right-of-publicity statute and to cover AI replication. Designed with the Nashville music industry in mind.",
+  "keyLegislation": [
+    {
+      "title": "ELVIS Act (2024) — HB 2091 / SB 2096",
+      "url": "https://wapp.capitol.tn.gov/apps/BillInfo/Default.aspx?BillNumber=HB2091"
+    },
+    {
+      "title": "Tenn. Code Ann. § 47-25-1101 et seq. (Personal Rights Protection Act)"
+    }
+  ],
+  "notableCases": [
+    {
+      "title": "TBD — early ELVIS Act enforcement to be tracked here."
+    }
+  ],
+  "lastUpdated": "2026-04-19"
+}

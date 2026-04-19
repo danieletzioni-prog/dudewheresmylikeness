@@ -1,0 +1,23 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-[var(--color-rule)] mt-20">
+  <div class="max-w-5xl mx-auto px-6 py-10 text-sm text-[var(--color-muted)] grid gap-6 md:grid-cols-2">
+    <div>
+      <p class="font-serif text-base text-[var(--color-ink)]">dudewheresmylikeness.com</p>
+      <p class="mt-1 max-w-md">
+        A public watchtower for AI likeness rights. Built by
+        <a href="https://www.gsb.stanford.edu/programs/msx" class="underline">Daniel Etzioni</a>,
+        drawing on executive interviews at CAA, WME, and UTA.
+      </p>
+    </div>
+    <div class="md:text-right">
+      <p class="uppercase tracking-wider text-xs">Not legal advice</p>
+      <p class="mt-1 max-w-md md:ml-auto">
+        Information on this site is editorial and for orientation only. Nothing here
+        constitutes legal advice. Consult qualified counsel for your jurisdiction.
+      </p>
+      <p class="mt-4 text-xs">&copy; {year}</p>
+    </div>
+  </div>
+</footer>

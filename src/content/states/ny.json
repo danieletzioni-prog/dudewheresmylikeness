@@ -1,0 +1,26 @@
+{
+  "name": "New York",
+  "abbr": "NY",
+  "rightOfPublicity": "Statutory (N.Y. Civ. Rights Law §§ 50–51)",
+  "postMortem": "Yes — 40 years (§ 50-f, enacted 2020)",
+  "aiCoverage": "Explicit for deceased performers (§ 50-f); limited for living",
+  "strength": "strong",
+  "summary": "New York's statute was expanded in 2020 to cover post-mortem \"digital replicas\" of deceased performers and to criminalize non-consensual sexually explicit deepfakes. Protections for living subjects still run primarily through the older §§ 50–51 framework.",
+  "keyLegislation": [
+    {
+      "title": "N.Y. Civ. Rights Law §§ 50–51 (right of privacy)"
+    },
+    {
+      "title": "N.Y. Civ. Rights Law § 50-f (post-mortem digital replicas, 2020)"
+    },
+    {
+      "title": "N.Y. Penal Law § 245.15 (non-consensual sexually explicit deepfakes)"
+    }
+  ],
+  "notableCases": [
+    {
+      "title": "TBD — New York AI likeness enforcement to be added."
+    }
+  ],
+  "lastUpdated": "2026-04-19"
+}

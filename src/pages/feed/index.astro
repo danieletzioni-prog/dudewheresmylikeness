@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('news')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Layout title="The Feed — dudewheresmylikeness.com">
+  <section class="max-w-3xl mx-auto px-6 pt-12 pb-6">
+    <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)]">The Feed</p>
+    <h1 class="mt-3 font-serif text-4xl md:text-5xl tracking-tight">What just happened</h1>
+    <p class="mt-4 text-[var(--color-muted)] max-w-2xl">
+      A curated, editorial feed of industry news about AI and likeness rights — with commentary.
+      Not an RSS aggregator. Quality over quantity.
+    </p>
+  </section>
+
+  <section class="max-w-3xl mx-auto px-6 pb-24">
+    {posts.length === 0 ? (
+      <p class="text-[var(--color-muted)] italic">No posts yet.</p>
+    ) : (
+      <ul class="divide-y divide-[var(--color-rule)] border-t border-[var(--color-rule)]">
+        {posts.map((post) => (
+          <li class="py-8">
+            <p class="text-xs uppercase tracking-[0.15em] text-[var(--color-muted)]">
+              {fmt(post.data.date)} &middot; <a href={post.data.sourceUrl} target="_blank" rel="noopener noreferrer">{post.data.sourceName}</a>
+            </p>
+            <h2 class="mt-2 font-serif text-2xl leading-snug">
+              <a href={`/feed/${post.id}`} class="no-underline hover:text-[var(--color-accent)]">
+                {post.data.title}
+              </a>
+            </h2>
+            {post.data.excerpt && (
+              <p class="mt-3 text-[var(--color-muted)]">{post.data.excerpt}</p>
+            )}
+            {post.data.tags.length > 0 && (
+              <ul class="mt-3 flex flex-wrap gap-2 text-[10px] uppercase tracking-wider text-[var(--color-muted)]">
+                {post.data.tags.map((tag) => (
+                  <li class="border border-[var(--color-rule)] px-2 py-0.5">{tag}</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</Layout>

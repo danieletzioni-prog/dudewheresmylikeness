@@ -1,0 +1,32 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'A public watchtower for AI likeness rights: what the laws are, how fast the world is moving, and what just happened.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Header />
+    <main class="flex-1 w-full">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
