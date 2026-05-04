@@ -1,12 +1,17 @@
 {
   "name": "Nevada",
   "abbr": "NV",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Nevada's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Nevada — Cat 2: NRS 597.770 plus 2025 deepfake amendments. Registration required to enforce post-mortem.",
+  "rightOfPublicity": "Yes — NRS 597.770 to 597.810. Covers commercial use of name, voice, signature, photograph, or likeness. Living and deceased persons.",
+  "postMortem": "Yes — 50 years after death. NRS 597.790(1). **Important quirk: enforcement of post-mortem rights requires registration with the Nevada Secretary of State.** Without registration, the post-mortem claim is procedurally barred even if the underlying violation is clear.",
+  "aiCoverage": "Limited but expanding. NRS 200.780 (NCII, with 2025 SB 213 / SB 263 amendments expanding to synthetic content). AB 73 (2025) covers election synthetic media, signed by Governor Lombardo with a January 1, 2026 effective date.",
+  "remedy": "Civil suit under NRS 597.810 for actual damages plus profits, with $750 statutory floor and attorney's fees. **For post-mortem claims, register with the Secretary of State first** — failing to do this is the most common procedural mistake.",
+  "whatsInteresting": "Nevada's registration requirement is the trap. The statute looks strong on paper — 50-year post-mortem, $750 statutory floor — but if a deceased performer's estate hasn't registered the right with the Secretary of State, courts will dismiss the claim. If you're managing a Nevada-domiciled estate (which includes a lot of Las Vegas residency entertainers), registration is the first step before any other estate planning.",
+  "primarySources": [
+    "NRS 597.770 to 597.810 — [leg.state.nv.us](http://leg.state.nv.us)",
+    "NRS 200.780 (NCII)",
+    "AB 73 (2025) (election synthetic media)"
+  ],
+  "lastVerified": "2026-05-04"
 }

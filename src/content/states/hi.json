@@ -1,12 +1,17 @@
 {
   "name": "Hawaii",
   "abbr": "HI",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Hawaii's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Hawaii — Cat 2: Strong codified ROP, 70-year post-mortem. 2024 election deepfake act enjoined on First Amendment grounds.",
+  "rightOfPublicity": "Yes — Haw. Rev. Stat. Ch. 482P (Publicity Rights, 2009; substantially expanded by 2021 Act 037). Strong full property right. Covers name, voice, signature, photograph, likeness, AND distinctive gestures and mannerisms.",
+  "postMortem": "Yes — 70 years after death. Haw. Rev. Stat. § 482P-4. Retroactive per the 2021 amendments.",
+  "aiCoverage": "Limited and currently contested. Hawaii 2024 Act 191 (election deepfakes) is **permanently enjoined** by the U.S. District Court for the District of Hawaii in early 2026 (*Babylon Bee* matter) on First Amendment grounds. The general publicity statute would still reach AI-generated commercial uses.",
+  "remedy": "Civil suit under Ch. 482P with actual damages plus profits, attorney's fees, and injunctive relief. Hawaii has a registration mechanism for post-mortem claims similar to Nevada — check § 482P-7 before relying on a post-mortem claim.",
+  "whatsInteresting": "Hawaii is the strongest codified statute of any state in the bottom half of Category 2 — full property right, 70-year post-mortem, broad attribute coverage including gestures and mannerisms. The 2024 election deepfake act got enjoined for being too broad on First Amendment grounds, which doesn't affect the general publicity statute. For Hawaii-domiciled performers (more than people realize, given the production tax incentives and the residency rules), Ch. 482P is genuinely strong.",
+  "primarySources": [
+    "Haw. Rev. Stat. Ch. 482P (Publicity Rights) — [capitol.hawaii.gov](http://capitol.hawaii.gov)",
+    "2021 Act 037 (substantial expansion)",
+    "2024 Act 191 (election deepfakes — enjoined)"
+  ],
+  "lastVerified": "2026-05-04"
 }

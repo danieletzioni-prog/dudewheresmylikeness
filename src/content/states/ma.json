@@ -1,12 +1,17 @@
 {
   "name": "Massachusetts",
   "abbr": "MA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Massachusetts's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Massachusetts — Cat 2: Privacy-tort statute, no post-mortem term. 2024 deepfake NCII statute extends to AI.",
+  "rightOfPublicity": "Limited. Mass. Gen. Laws ch. 214, § 3A is a codified commercial-appropriation statute covering name, portrait, and picture. **Important caveats: no voice coverage, no signature coverage, no post-mortem term, structurally a privacy tort rather than a true property right.**",
+  "postMortem": "No codified post-mortem term. § 3A is silent on descendibility.",
+  "aiCoverage": "Yes. Mass. Gen. Laws ch. 272 §§ 105, 105D as amended by St. 2024 c. 117 (effective Sept. 18, 2024) expressly extends to \"digitization\" — defined to include computer-generated and AI-altered images. Suno is currently a major AI music litigation venue based in the District of Massachusetts.",
+  "remedy": "Civil suit under § 3A for actual damages and injunctive relief. For AI-generated NCII, criminal referral plus civil action under ch. 272 § 105D.",
+  "whatsInteresting": "Massachusetts is the closest call in this whole categorization. § 3A is structurally a New York-style privacy statute, not a true right of publicity — no voice, no post-mortem, no descendibility. But the 2024 amendments to the NCII statute expressly include AI-generated/altered images, which is a real AI overlay on a real codified base. If you're a performer based in Boston, your statutory likeness protection is thinner than in New York or California — but better than common-law-only states.",
+  "primarySources": [
+    "Mass. Gen. Laws ch. 214, § 3A — [malegislature.gov](http://malegislature.gov)",
+    "Mass. Gen. Laws ch. 272 §§ 105, 105D (as amended) — [malegislature.gov](http://malegislature.gov)",
+    "St. 2024 c. 117 (session law)"
+  ],
+  "lastVerified": "2026-05-04"
 }

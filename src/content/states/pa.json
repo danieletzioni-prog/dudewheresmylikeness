@@ -1,12 +1,16 @@
 {
   "name": "Pennsylvania",
   "abbr": "PA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Pennsylvania's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 3,
+  "tooltip": "Pennsylvania — Cat 3: 42 Pa.C.S. § 8316. 30-year post-mortem. No AI-specific overlay yet.",
+  "rightOfPublicity": "Yes — 42 Pa.C.S. § 8316. Covers commercial value of name or likeness for living and deceased persons.",
+  "postMortem": "Yes — 30 years after death. 42 Pa.C.S. § 8316(c).",
+  "aiCoverage": "No general AI digital replica statute. 42 Pa.C.S. § 8316.1 is a separate intimate-image statute. *Hepp v. Facebook*, 14 F.4th 204 (3d Cir. 2021) is the controlling Third Circuit case on the § 230 IP-exception interaction with state right-of-publicity claims — favorable to plaintiffs.",
+  "remedy": "Civil suit under § 8316 for actual damages plus profits and attorney's fees. The Third Circuit's *Hepp* posture means platforms don't get automatic § 230 immunity for state ROP claims, which is plaintiff-friendly.",
+  "whatsInteresting": "Pennsylvania doesn't have an AI-specific likeness statute yet, but it has something almost as useful: the Third Circuit's *Hepp v. Facebook* ruling, which says state right-of-publicity claims survive § 230 immunity because of the IP exception. This is huge if you're suing a platform for hosting unauthorized AI content of you — most circuits dismiss these on § 230, the Third Circuit doesn't. For Pennsylvania-based performers, that procedural advantage matters more than the absence of an AI-specific statute.",
+  "primarySources": [
+    "42 Pa.C.S. § 8316 — [legis.state.pa.us](http://legis.state.pa.us)",
+    "*Hepp v. Facebook*, 14 F.4th 204 (3d Cir. 2021)"
+  ],
+  "lastVerified": "2026-05-04"
 }

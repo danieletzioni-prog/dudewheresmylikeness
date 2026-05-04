@@ -1,12 +1,18 @@
 {
   "name": "Indiana",
   "abbr": "IN",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Indiana's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Indiana — Cat 2: 100-year post-mortem (longest in country). Why James Dean and Bettie Page estates are managed from here.",
+  "rightOfPublicity": "Yes — Ind. Code § 32-36-1 et seq. Among the broadest in the country in terms of protected attributes: name, voice, signature, photograph, image, likeness, distinctive appearance, gestures, and mannerisms. Living and deceased persons.",
+  "postMortem": "Yes — 100 years after death. Ind. Code § 32-36-1-8. The longest post-mortem term in the United States. Fully transferable and descendible.",
+  "aiCoverage": "Limited. Ind. Code § 3-9-8 (P.L. 81-2024) covers election deepfakes. Ind. Code § 35-45-4-8 (P.L. 79-2024) covers AI-generated NCII. No general AI digital replica statute.",
+  "remedy": "Civil suit under § 32-36-1 with actual damages plus profits, plus injunctive relief. Indiana's broad attribute coverage means courts can reach AI-generated replicas under existing language even without an AI-specific statute.",
+  "whatsInteresting": "If you care about your post-mortem rights — and most working entertainers should — Indiana's 100-year term is the reason estates of deceased icons like James Dean, Bettie Page, and others are formally managed out of Indianapolis through CMG Worldwide. The state's \"distinctive appearance, gestures, and mannerisms\" language is also unusually broad — it's the kind of language a court could read to cover an AI deepfake even though the statute predates the technology. Indiana is the forum-shopping destination for legacy estate planning in entertainment.",
+  "primarySources": [
+    "Ind. Code § 32-36-1 et seq. — [iga.in.gov](http://iga.in.gov)",
+    "Ind. Code § 32-36-1-8 (post-mortem)",
+    "Ind. Code § 3-9-8 (election deepfakes, P.L. 81-2024)",
+    "Ind. Code § 35-45-4-8 (AI-NCII, P.L. 79-2024)"
+  ],
+  "lastVerified": "2026-05-04"
 }

@@ -1,23 +1,55 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer class="border-t border-[var(--color-rule)] mt-20">
-  <div class="max-w-5xl mx-auto px-6 py-10 text-sm text-[var(--color-muted)] grid gap-6 md:grid-cols-2">
+<footer class="relative mt-24 pt-16 pb-10 bg-gradient-to-b from-transparent to-white/70 border-t-2 border-[var(--color-blue)]/15">
+  {/* Drifting clouds */}
+  <svg class="cloud" style="left: 4%; top: -30px; width: 160px;" viewBox="0 0 200 80" aria-hidden="true">
+    <ellipse cx="60" cy="50" rx="55" ry="28" fill="#ffffff"/>
+    <ellipse cx="110" cy="40" rx="48" ry="32" fill="#ffffff"/>
+    <ellipse cx="150" cy="55" rx="40" ry="22" fill="#ffffff"/>
+  </svg>
+  <svg class="cloud" style="right: 8%; top: 20px; width: 120px; opacity: 0.7;" viewBox="0 0 200 80" aria-hidden="true">
+    <ellipse cx="60" cy="50" rx="55" ry="28" fill="#ffffff"/>
+    <ellipse cx="110" cy="40" rx="48" ry="32" fill="#ffffff"/>
+    <ellipse cx="150" cy="55" rx="40" ry="22" fill="#ffffff"/>
+  </svg>
+
+  <div class="relative max-w-6xl mx-auto px-6 grid gap-8 md:grid-cols-3 text-sm">
     <div>
-      <p class="font-serif text-base text-[var(--color-ink)]">dudewheresmylikeness.com</p>
-      <p class="mt-1 max-w-md">
-        A public watchtower for AI likeness rights. Built by
-        <a href="https://www.gsb.stanford.edu/programs/msx" class="underline">Daniel Etzioni</a>,
-        drawing on executive interviews at CAA, WME, and UTA.
+      <p class="display text-2xl">
+        <span class="text-[var(--color-orange)]">dude</span><span class="text-[var(--color-blue)]">wheresmylikeness</span><span class="text-[var(--color-blue)]/60">.com</span>
+      </p>
+      <p class="mt-3 text-[var(--color-ink-soft)] max-w-md">
+        Mapping AI likeness rights. Built by
+        <a
+          href="https://www.linkedin.com/in/daniel-etzioni/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[var(--color-ink-soft)] no-underline hover:underline decoration-[var(--color-ink-soft)] underline-offset-2"
+        >Daniel Etzioni</a>, drawing on AI likeness research
+      </p>
+    </div>
+    <div>
+      <p class="font-sans font-extrabold uppercase tracking-[0.18em] text-xs text-[var(--color-orange-deep)]">
+        Not legal advice
+      </p>
+      <p class="mt-2 text-[var(--color-ink-soft)] max-w-md">
+        This site is a starting reference, not legal advice. State law in this area is
+        changing quickly; per-state pages show their last-verified date. Federal claims
+        (Lanham Act false endorsement, defamation, NCII statutes) are available in every
+        jurisdiction regardless of category.
       </p>
     </div>
     <div class="md:text-right">
-      <p class="uppercase tracking-wider text-xs">Not legal advice</p>
-      <p class="mt-1 max-w-md md:ml-auto">
-        Information on this site is editorial and for orientation only. Nothing here
-        constitutes legal advice. Consult qualified counsel for your jurisdiction.
+      <p class="font-sans font-extrabold uppercase tracking-[0.18em] text-xs text-[var(--color-orange-deep)]">
+        Small print
       </p>
-      <p class="mt-4 text-xs">&copy; {year}</p>
+      <p class="mt-2 text-[var(--color-ink-soft)] max-w-xs md:ml-auto text-xs">
+        Visual direction affectionately pastiches the <em>Dude, Where's My Car?</em> (2000)
+        movie poster. No affiliation with the film or its rights-holders. The bit on this
+        site is the point.
+      </p>
+      <p class="mt-4 text-xs text-[var(--color-muted)]">&copy; {year}</p>
     </div>
   </div>
 </footer>

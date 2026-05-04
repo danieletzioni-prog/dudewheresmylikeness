@@ -7,14 +7,18 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "aggregate": "node scripts/aggregate-feeds.mjs",
+    "build": "npm run aggregate && astro build",
+    "build:no-aggregate": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
+    "@astrojs/vercel": "^10.0.6",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.8",
+    "fast-xml-parser": "^5.7.2",
     "tailwindcss": "^4.2.2"
   }
 }

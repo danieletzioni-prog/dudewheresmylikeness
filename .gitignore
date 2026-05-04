@@ -2,6 +2,15 @@
 dist/
 # generated types
 .astro/
+# Vercel adapter local artifacts
+.vercel/
+
+# editor configs (kept local)
+.vscode/
+
+# user-side asset working folders (not part of the site)
+Gemini generated images/
+Misc images/
 
 # dependencies
 node_modules/

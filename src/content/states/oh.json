@@ -1,12 +1,17 @@
 {
   "name": "Ohio",
   "abbr": "OH",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Ohio's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 3,
+  "tooltip": "Ohio — Cat 3: Strong publicity statute (Ch. 2741). 60-year post-mortem. No AI-specific overlay yet.",
+  "rightOfPublicity": "Yes — Ohio Rev. Code Ch. 2741, specifically § 2741.02. Broad \"persona\" definition covering name, voice, signature, photograph, image, likeness, AND distinctive appearance, gestures, and mannerisms. Living and deceased persons.",
+  "postMortem": "Yes — 60 years after death. Ohio Rev. Code § 2741.02. (10-year post-mortem for deceased Ohio National Guard or U.S. armed forces members.)",
+  "aiCoverage": "No AI-specific statute. The broad \"persona\" definition could be argued to reach AI-generated content under existing language, but no Ohio court has tested it.",
+  "remedy": "Civil suit under Ohio Rev. Code § 2741.06 for actual damages plus statutory damages of $2,500 to $10,000, profits, attorney's fees, and injunctive relief.",
+  "whatsInteresting": "Ohio's \"distinctive appearance, gestures, and mannerisms\" language is unusually broad — broader than most states — and could be argued to reach AI-generated deepfakes even without an AI-specific statute. The state hasn't passed AI-likeness legislation yet, but the existing publicity statute is strong enough that you have real leverage. The $2,500-$10,000 statutory damages range is also better than most Category 3 states.",
+  "primarySources": [
+    "Ohio Rev. Code Ch. 2741 — [codes.ohio.gov](http://codes.ohio.gov)",
+    "Ohio Rev. Code § 2741.02 (persona definition and post-mortem)",
+    "Ohio Rev. Code § 2741.06 (remedies)"
+  ],
+  "lastVerified": "2026-05-04"
 }

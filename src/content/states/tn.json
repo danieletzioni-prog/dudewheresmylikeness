@@ -1,24 +1,18 @@
 {
   "name": "Tennessee",
   "abbr": "TN",
-  "rightOfPublicity": "Statutory (ELVIS Act / Personal Rights Protection Act)",
-  "postMortem": "Yes — indefinite, commercially exploited (Tenn. Code Ann. § 47-25-1104)",
-  "aiCoverage": "Explicit (ELVIS Act, 2024) — covers voice and image, living and dead",
-  "strength": "explicit",
-  "summary": "The ELVIS Act (Ensuring Likeness, Voice, and Image Security Act) made Tennessee the first state to explicitly include voice in its right-of-publicity statute and to cover AI replication. Designed with the Nashville music industry in mind.",
-  "keyLegislation": [
-    {
-      "title": "ELVIS Act (2024) — HB 2091 / SB 2096",
-      "url": "https://wapp.capitol.tn.gov/apps/BillInfo/Default.aspx?BillNumber=HB2091"
-    },
-    {
-      "title": "Tenn. Code Ann. § 47-25-1101 et seq. (Personal Rights Protection Act)"
-    }
+  "category": 1,
+  "tooltip": "Tennessee — Cat 1: ELVIS Act. Voice protected. Tools liability. The strongest state if you're a recording artist.",
+  "rightOfPublicity": "Yes — Tennessee Code Ann. § 47-25-1101 et seq., the Personal Rights Protection Act, as overhauled by the ELVIS Act (2024 Pub. Ch. 588, effective July 1, 2024). Your name, photograph, likeness, and — uniquely — your voice are protected as property rights.",
+  "postMortem": "Indefinite, as long as the right is being commercially exploited. Tenn. Code Ann. § 47-25-1104. The right runs for 10 years after death automatically; after that, it persists as long as it's being used commercially, with a 2-year non-use forfeiture rule. This is why the Elvis Presley estate has continuous rights nearly 50 years after his death.",
+  "aiCoverage": "Yes, expressly — and uniquely strong. The ELVIS Act adds \"voice\" as a protected attribute and creates AI replica liability not just for end users but for the makers of AI tools whose primary purpose is producing unauthorized digital replicas. Treble damages available for armed-forces violations. Class A misdemeanor under Tenn. Code Ann. § 39-14-152(g).",
+  "remedy": "Cease-and-desist citing the ELVIS Act, then civil suit for actual damages plus profits, with treble damages where applicable. The tools-liability provision means you can go after the AI service provider directly, not just whoever uploaded your cloned voice.",
+  "whatsInteresting": "If you're a recording artist worried about AI voice clones, Tennessee is the strongest state to be domiciled in, full stop. The ELVIS Act passed 93-0 in the House and 30-0 in the Senate — bipartisan support that's nearly impossible elsewhere — and it's the only state statute in the country that lets you sue the AI tool maker, not just the person who used the tool. Drake's \"Heart on My Sleeve\" situation, where his voice was cloned without consent, is the prototypical case the ELVIS Act was built for. If you live in Nashville and care about your voice, this is your statute.",
+  "primarySources": [
+    "Tenn. Code Ann. § 47-25-1101 et seq. (Personal Rights Protection Act / ELVIS Act) — [publications.tnsosfiles.com](http://publications.tnsosfiles.com)",
+    "2024 Pub. Ch. 588 (ELVIS Act session law) — [capitol.tn.gov](http://capitol.tn.gov)",
+    "Tenn. Code Ann. § 39-14-152(g) (criminal provision)",
+    "Tenn. Code Ann. § 2-19-120 (political deepfake)"
   ],
-  "notableCases": [
-    {
-      "title": "TBD — early ELVIS Act enforcement to be tracked here."
-    }
-  ],
-  "lastUpdated": "2026-04-19"
+  "lastVerified": "2026-05-04"
 }

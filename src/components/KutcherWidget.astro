@@ -1,0 +1,81 @@
+---
+import { SITE_LAUNCH_ISO } from '../config/launch';
+---
+<aside
+  id="kutcher-widget"
+  class="fixed bottom-4 right-4 z-50 w-[248px] bg-white text-[var(--color-ink)] border-2 border-[var(--color-blue)] rounded-2xl shadow-[0_6px_0_0_var(--color-blue-deep),0_14px_30px_-10px_rgba(20,38,64,0.3)] select-none overflow-hidden"
+  data-launch-iso={SITE_LAUNCH_ISO}
+  aria-label="Meta-incident clock"
+>
+  <button
+    id="kutcher-dismiss"
+    type="button"
+    aria-label="Dismiss widget"
+    class="absolute top-1.5 right-1.5 z-10 w-6 h-6 flex items-center justify-center rounded-full bg-white/90 text-[var(--color-blue)] hover:bg-[var(--color-orange)] hover:text-white text-sm leading-none font-bold border border-[var(--color-blue)]/30"
+  >
+    &times;
+  </button>
+  <div class="px-4 pt-3 pb-3.5">
+    <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-[var(--color-orange-deep)] leading-snug pr-6">
+      This site's AI-generated Ashton Kutcher has been up for
+    </p>
+    <p
+      id="kutcher-readout"
+      class="mt-2 display text-2xl tracking-wide tabular-nums leading-none text-[var(--color-blue)]"
+      aria-live="polite"
+    >
+      <span id="kw-d">—</span><span class="text-[var(--color-muted)] text-xs font-sans font-bold">d</span>
+      <span id="kw-h" class="ml-1.5">—</span><span class="text-[var(--color-muted)] text-xs font-sans font-bold">h</span>
+      <span id="kw-m" class="ml-1.5">—</span><span class="text-[var(--color-muted)] text-xs font-sans font-bold">m</span>
+      <span id="kw-s" class="ml-1.5">—</span><span class="text-[var(--color-muted)] text-xs font-sans font-bold">s</span>
+    </p>
+  </div>
+</aside>
+
+<script is:inline>
+  (() => {
+    const el = document.getElementById('kutcher-widget');
+    if (!el) return;
+    const iso = el.getAttribute('data-launch-iso');
+    if (!iso) return;
+    const launchMs = new Date(iso).getTime();
+    const $d = document.getElementById('kw-d');
+    const $h = document.getElementById('kw-h');
+    const $m = document.getElementById('kw-m');
+    const $s = document.getElementById('kw-s');
+    const pad = (n) => String(n).padStart(2, '0');
+
+    const tick = () => {
+      let diff = Math.max(0, Math.floor((Date.now() - launchMs) / 1000));
+      const d = Math.floor(diff / 86400); diff -= d * 86400;
+      const h = Math.floor(diff / 3600); diff -= h * 3600;
+      const m = Math.floor(diff / 60); diff -= m * 60;
+      $d.textContent = String(d);
+      $h.textContent = pad(h);
+      $m.textContent = pad(m);
+      $s.textContent = pad(diff);
+    };
+    tick();
+    const interval = setInterval(tick, 1000);
+
+    document.getElementById('kutcher-dismiss')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      el.remove();
+      clearInterval(interval);
+      // Not persisted — the bit doesn't work if you can kill it forever.
+    });
+
+    // On landing: hide while hero is in view, fade in once scrolled past.
+    const sentinel = document.getElementById('hero-sentinel');
+    if (sentinel && 'IntersectionObserver' in window) {
+      el.setAttribute('data-hidden', 'true');
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          el.setAttribute('data-hidden', entry.isIntersecting ? 'true' : 'false');
+        }
+      }, { threshold: 0, rootMargin: '-64px 0px 0px 0px' });
+      io.observe(sentinel);
+    }
+  })();
+</script>

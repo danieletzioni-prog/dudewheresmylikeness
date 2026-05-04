@@ -1,60 +1,413 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import USMap from '../components/USMap.astro';
+import { POST_MORTEM_ROWS } from '../data/post-mortem';
+import aggregated from '../data/aggregated-feed.json';
+import featured from '../data/featured-stories.json';
 
-const doors = [
-  {
-    href: '/map',
-    label: 'The Map',
-    tag: '50 states',
-    blurb: 'Where does your likeness live? State-by-state posture on right of publicity, post-mortem protection, and explicit AI coverage.',
-  },
-  {
-    href: '/clock',
-    label: 'The Clock',
-    tag: 'Live',
-    blurb: 'How long has it been since the last flagged unauthorized AI likeness incident? Spoiler: not long.',
-  },
-  {
-    href: '/feed',
-    label: 'The Feed',
-    tag: 'Field notes',
-    blurb: 'What just happened — a curated, editorial feed of industry news about AI and likeness rights, with commentary.',
-  },
+// Default sort: descending by termYears, ties broken alphabetically.
+const postMortemSorted = [...POST_MORTEM_ROWS].sort((a, b) => {
+  if (b.termYears !== a.termYears) return b.termYears - a.termYears;
+  return a.jurisdiction.localeCompare(b.jurisdiction);
+});
+
+const featuredItems = (featured.items ?? []).filter((x: any) => x.featured);
+const featuredIds = new Set(featuredItems.map((x: any) => x.id));
+const recentItems = (aggregated.items ?? [])
+  .filter((it: any) => !featuredIds.has(it.id))
+  .slice(0, 6); // homepage shows fewer; full list lives at /feed
+
+const fmtDate = (iso?: string | null) => {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+};
+
+const legend: Array<{ key: 1 | 2 | 3 | 4; label: string }> = [
+  { key: 1, label: 'Comprehensive AI-era statute' },
+  { key: 2, label: 'Strong publicity statute, AI coverage developing' },
+  { key: 3, label: 'Traditional publicity statute, no AI-specific overlay' },
+  { key: 4, label: 'Common law or unverified' },
 ];
+
+const categoryClassName: Record<number, string> = {
+  1: 'bg-[var(--color-cat-1)]',
+  2: 'bg-[var(--color-cat-2)]',
+  3: 'bg-[var(--color-cat-3)]',
+  4: 'bg-[var(--color-cat-4)]',
+};
 ---
 <Layout title="dudewheresmylikeness.com — a public watchtower for AI likeness rights">
-  <section class="max-w-3xl mx-auto px-6 pt-20 pb-10">
-    <p class="text-xs uppercase tracking-[0.2em] text-[var(--color-muted)] mb-6">
-      A public watchtower for AI likeness rights
-    </p>
-    <h1 class="font-serif text-5xl md:text-6xl leading-[1.05] tracking-tight">
-      What the laws are, how fast the world is moving, and what just happened.
-    </h1>
-    <p class="mt-6 text-lg text-[var(--color-muted)] max-w-2xl">
-      Built by Daniel Etzioni, drawing on executive interviews at CAA, WME, and UTA
-      about AI likeness rights and digital consent infrastructure.
-    </p>
+
+  {/* ---------- HERO ---------- */}
+  <section id="hero" class="relative pt-6 md:pt-10 pb-12 overflow-hidden">
+    <svg class="cloud" style="left: 5%; top: 14%; width: 180px;" viewBox="0 0 200 80" aria-hidden="true">
+      <ellipse cx="60" cy="50" rx="55" ry="28" fill="#ffffff"/>
+      <ellipse cx="110" cy="40" rx="48" ry="32" fill="#ffffff"/>
+      <ellipse cx="150" cy="55" rx="40" ry="22" fill="#ffffff"/>
+    </svg>
+    <svg class="cloud" style="right: 4%; top: 30%; width: 140px; opacity: 0.75;" viewBox="0 0 200 80" aria-hidden="true">
+      <ellipse cx="60" cy="50" rx="55" ry="28" fill="#ffffff"/>
+      <ellipse cx="110" cy="40" rx="48" ry="32" fill="#ffffff"/>
+      <ellipse cx="150" cy="55" rx="40" ry="22" fill="#ffffff"/>
+    </svg>
+
+    <div class="relative max-w-[1400px] mx-auto px-4 md:px-8">
+      {/* TODO: drop the final poster at public/images/hero.png. If that asset
+          is missing, the <img> below will alt-fallback to the placeholder block. */}
+      <picture class="block">
+        <img
+          src="/images/hero.png"
+          alt="dudewheresmylikeness.com — AI-generated riff on the Dude, Where's My Car? movie poster"
+          class="block w-full h-auto mx-auto"
+          onerror="this.style.display='none'; document.getElementById('hero-fallback')?.removeAttribute('hidden');"
+          fetchpriority="high"
+        />
+      </picture>
+      <div id="hero-fallback" hidden class="mx-auto max-w-4xl poster-card px-8 py-16 text-center">
+        <p class="poster-bar">Hero image missing</p>
+        <h2 class="mt-5 display text-4xl">
+          <span class="text-[var(--color-orange)]">dude</span><span class="text-[var(--color-blue)]">, where's my likeness?</span>
+        </h2>
+        <p class="mt-5 text-[var(--color-muted)]">
+          Drop the final hero image at <code class="text-[var(--color-blue)]">/public/images/hero.png</code> and it'll appear here.
+        </p>
+      </div>
+
+      <div class="mt-8 flex justify-center">
+        <a
+          href="#map"
+          class="no-underline scroll-cue flex flex-col items-center gap-1 text-xs font-extrabold uppercase tracking-[0.2em] text-[var(--color-blue)] hover:text-[var(--color-orange-deep)]"
+        >
+          <span>Scroll</span>
+          <svg width="18" height="22" viewBox="0 0 18 22" fill="none" aria-hidden="true">
+            <path d="M9 2v17M2 12l7 7 7-7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    {/* Sentinel just below the hero: the Kutcher widget fades in once this
+        crosses the top of the viewport. */}
+    <div id="hero-sentinel" aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-px pointer-events-none"></div>
   </section>
 
-  <section class="max-w-5xl mx-auto px-6 pb-24">
-    <div class="grid md:grid-cols-3 gap-px bg-[var(--color-rule)] border border-[var(--color-rule)]">
-      {doors.map((door) => (
+  {/* ---------- MAP ---------- */}
+  <section id="map" class="relative pt-10 pb-16 scroll-mt-20">
+    <div class="max-w-6xl mx-auto px-5">
+      <span class="poster-bar">The Map</span>
+      <h2 class="mt-5 display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
+        <span class="text-[var(--color-ink)]">Your Face.</span>
+        <span class="text-[var(--color-orange)]">Your Rights.</span>
+        <span class="text-[var(--color-blue)]">Your State.</span>
+      </h2>
+      <p class="mt-6 max-w-3xl text-[var(--color-ink-soft)] leading-snug">
+        State-by-state posture on right of publicity, post-mortem protection, and
+        explicit AI digital-replica coverage. <strong class="font-extrabold">16 states have built statutory protection.</strong>
+        The other 34 plus DC haven't. Click any state to see what's on the books.
+      </p>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5 mt-6">
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--color-ink-soft)] font-bold uppercase tracking-[0.1em]">
+        {legend.map((item) => (
+          <li class="flex items-center gap-2">
+            <span class={`inline-block w-3.5 h-3.5 rounded-sm ${categoryClassName[item.key]} border border-[var(--color-blue)]/40`}></span>
+            <span class="text-[var(--color-blue)]">Cat&nbsp;{item.key}.</span> {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5 mt-6 grid gap-6 lg:grid-cols-[1fr_22rem]">
+      <div class="poster-card p-3 lg:p-5">
+        <USMap />
+      </div>
+
+      <aside
+        id="state-panel"
+        class="poster-card p-5 self-start lg:sticky lg:top-24 text-sm"
+        aria-live="polite"
+      >
+        <div id="state-panel-empty">
+          <p class="text-[var(--color-muted)] italic">
+            Click any state to see its posture on AI likeness rights.
+          </p>
+        </div>
+        <div id="state-panel-content" hidden>
+          <span id="panel-cat-badge" class="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-[0.18em]">CAT —</span>
+          <h3 class="mt-3 display text-3xl text-[var(--color-blue)]" data-field="name"></h3>
+          <p class="mt-2 text-[var(--color-muted)] italic text-xs leading-snug" data-field="tooltipShort"></p>
+
+          <dl class="mt-5 grid gap-3">
+            <div>
+              <dt class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[var(--color-orange-deep)]">Protected during life?</dt>
+              <dd class="mt-0.5" data-field="rightOfPublicity"></dd>
+            </div>
+            <div>
+              <dt class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[var(--color-orange-deep)]">Protected after death?</dt>
+              <dd class="mt-0.5" data-field="postMortem"></dd>
+            </div>
+            <div>
+              <dt class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[var(--color-orange-deep)]">AI specifically called out?</dt>
+              <dd class="mt-0.5" data-field="aiCoverage"></dd>
+            </div>
+            <div>
+              <dt class="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[var(--color-orange-deep)]">What do you actually do?</dt>
+              <dd class="mt-0.5" data-field="remedy"></dd>
+            </div>
+          </dl>
+
+          <a
+            id="panel-full-link"
+            href="#"
+            class="mt-6 inline-flex items-center gap-2 bg-[var(--color-orange)] hover:bg-[var(--color-orange-deep)] text-white font-extrabold uppercase tracking-[0.12em] text-xs px-4 py-2 rounded-full no-underline shadow-[0_2px_0_0_var(--color-orange-deep)]"
+          >
+            Full state page &rarr;
+          </a>
+
+          <p class="mt-5 text-[10px] uppercase tracking-[0.15em] font-bold text-[var(--color-muted)]">
+            Last verified <span class="text-[var(--color-ink)]" data-field="lastVerified"></span>
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* ---------- POST-MORTEM TABLE ---------- */}
+  <section id="post-mortem" class="relative pt-12 pb-16 scroll-mt-20">
+    <div class="max-w-5xl mx-auto px-5">
+      <span class="poster-bar">Post-Mortem</span>
+      <h2 class="mt-5 display text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.98]">
+        <span class="text-[var(--color-blue)]">Post-Mortem Protection Term</span><br/>
+        <span class="text-[var(--color-orange)]">By State.</span>
+      </h2>
+      <p class="mt-5 max-w-3xl text-[var(--color-ink-soft)] leading-snug">
+        How long your right of publicity outlives you, jurisdiction by jurisdiction. Click a column header to re-sort. Type to filter.
+      </p>
+
+      <div class="mt-6 flex items-center gap-3">
+        <label for="pm-search" class="sr-only">Filter jurisdictions</label>
+        <input
+          id="pm-search"
+          type="search"
+          placeholder="Filter by jurisdiction…"
+          class="w-full md:w-80 px-4 py-2 rounded-full border-2 border-[var(--color-blue)]/40 bg-white text-[var(--color-ink)] placeholder-[var(--color-muted)] focus:outline-none focus:border-[var(--color-orange)] text-sm font-sans"
+        />
+        <span id="pm-count" class="text-xs font-extrabold uppercase tracking-[0.15em] text-[var(--color-muted)]">{postMortemSorted.length} jurisdictions</span>
+      </div>
+
+      <div class="mt-5 poster-card overflow-x-auto">
+        <table id="pm-table" class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="bg-[var(--color-blue)] text-white">
+              <th data-sort="jurisdiction" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]">
+                Jurisdiction <span class="pm-arrow ml-1 opacity-60"></span>
+              </th>
+              <th data-sort="termYears" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]" aria-sort="descending">
+                Term <span class="pm-arrow ml-1">▼</span>
+              </th>
+              <th data-sort="citation" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]">
+                Citation <span class="pm-arrow ml-1 opacity-60"></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="pm-tbody">
+            {postMortemSorted.map((row) => (
+              <tr
+                class="border-t border-[var(--color-blue)]/15 hover:bg-[var(--color-cat-4)]/40 transition-colors"
+                data-jurisdiction={row.jurisdiction}
+                data-term-years={row.termYears}
+                data-citation={row.citation}
+              >
+                <td class="px-4 py-3 font-extrabold text-[var(--color-blue)] whitespace-nowrap">{row.jurisdiction}</td>
+                <td class="px-4 py-3 text-[var(--color-ink)]">{row.term}</td>
+                <td class="px-4 py-3 text-[var(--color-ink-soft)] font-mono text-xs whitespace-nowrap">{row.citation}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div id="pm-empty" class="hidden p-6 text-center text-[var(--color-muted)] italic text-sm">
+          No jurisdictions match.
+        </div>
+      </div>
+
+      <p class="mt-5 text-xs text-[var(--color-muted)] leading-relaxed max-w-3xl">
+        States not listed (Massachusetts, Rhode Island, Wisconsin, Utah, and all common-law jurisdictions) do not have a codified post-mortem term.
+      </p>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const init = () => {
+          const tbody = document.getElementById('pm-tbody');
+          const search = document.getElementById('pm-search');
+          const empty = document.getElementById('pm-empty');
+          const count = document.getElementById('pm-count');
+          if (!tbody || !search) return;
+
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          let sortKey = 'termYears';
+          let sortDir = 'desc';
+          let filter = '';
+
+          const applyFilter = () => {
+            const q = filter.trim().toLowerCase();
+            let shown = 0;
+            rows.forEach((r) => {
+              const j = r.dataset.jurisdiction.toLowerCase();
+              const visible = !q || j.includes(q);
+              r.hidden = !visible;
+              if (visible) shown++;
+            });
+            empty.classList.toggle('hidden', shown > 0);
+            const total = rows.length;
+            count.textContent = q
+              ? shown + ' of ' + total + ' jurisdiction' + (total === 1 ? '' : 's')
+              : total + ' jurisdiction' + (total === 1 ? '' : 's');
+          };
+
+          const sort = () => {
+            const cmp = sortKey === 'termYears'
+              ? (a, b) => Number(a.dataset.termYears) - Number(b.dataset.termYears)
+              : (a, b) => a.dataset[sortKey].localeCompare(b.dataset[sortKey]);
+            const sorted = [...rows].sort((a, b) => {
+              const r = cmp(a, b);
+              if (r !== 0) return sortDir === 'desc' ? -r : r;
+              // Tie-break by jurisdiction A→Z always.
+              return a.dataset.jurisdiction.localeCompare(b.dataset.jurisdiction);
+            });
+            sorted.forEach((r) => tbody.appendChild(r));
+          };
+
+          const updateArrows = () => {
+            document.querySelectorAll('#pm-table thead th').forEach((th) => {
+              const arrow = th.querySelector('.pm-arrow');
+              if (!arrow) return;
+              const key = th.dataset.sort;
+              if (key === sortKey) {
+                arrow.textContent = sortDir === 'desc' ? '▼' : '▲';
+                arrow.classList.remove('opacity-60');
+                th.setAttribute('aria-sort', sortDir === 'desc' ? 'descending' : 'ascending');
+              } else {
+                arrow.textContent = '';
+                arrow.classList.add('opacity-60');
+                th.removeAttribute('aria-sort');
+              }
+            });
+          };
+
+          document.querySelectorAll('#pm-table thead th[data-sort]').forEach((th) => {
+            th.addEventListener('click', () => {
+              const key = th.dataset.sort;
+              if (sortKey === key) {
+                sortDir = sortDir === 'desc' ? 'asc' : 'desc';
+              } else {
+                sortKey = key;
+                // Sensible defaults per column type.
+                sortDir = key === 'termYears' ? 'desc' : 'asc';
+              }
+              sort();
+              updateArrows();
+            });
+          });
+
+          search.addEventListener('input', (e) => {
+            filter = e.target.value;
+            applyFilter();
+          });
+
+          // Initial state already matches default sort; just sync arrows.
+          updateArrows();
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </section>
+
+  {/* ---------- FEED PREVIEW ---------- */}
+  <section id="feed" class="relative pt-16 pb-20 scroll-mt-20">
+    <svg class="cloud" style="right: 3%; top: -20px; width: 140px; opacity: 0.7;" viewBox="0 0 200 80" aria-hidden="true">
+      <ellipse cx="60" cy="50" rx="55" ry="28" fill="#ffffff"/>
+      <ellipse cx="110" cy="40" rx="48" ry="32" fill="#ffffff"/>
+      <ellipse cx="150" cy="55" rx="40" ry="22" fill="#ffffff"/>
+    </svg>
+
+    <div class="max-w-4xl mx-auto px-5 relative">
+      <span class="poster-bar">The Feed</span>
+      <h2 class="mt-5 display text-[clamp(2.25rem,5vw,3.75rem)]">
+        <span class="text-[var(--color-orange)]">WTF</span> <span class="text-[var(--color-blue)]">is happening</span>
+      </h2>
+      <p class="mt-4 text-[var(--color-ink-soft)] max-w-2xl">
+        Aggregated news on AI likeness rights, deepfakes, right-of-publicity legislation, and
+        platform policy. Auto-refreshed daily; featured stories curated by hand.
+      </p>
+
+      {featuredItems.length > 0 && (
+        <div class="mt-8 grid gap-5">
+          {featuredItems.map((item: any) => (
+            <article class="poster-card p-5 md:p-6 border-[3px] border-[var(--color-orange)] shadow-[0_6px_0_0_var(--color-orange-deep),0_14px_30px_-10px_rgba(20,38,64,0.25)]">
+              <p class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[var(--color-orange-deep)]">
+                ★ Featured &middot; {fmtDate(item.publishedAt)} &middot; <span class="text-[var(--color-muted)]">{item.source}</span>
+              </p>
+              <h3 class="mt-2 display text-2xl md:text-3xl leading-tight text-[var(--color-blue)]">
+                <a href={item.url} target="_blank" rel="noopener noreferrer" class="no-underline hover:text-[var(--color-orange-deep)]">
+                  {item.title}
+                </a>
+              </h3>
+              {item.summary && (
+                <p class="mt-3 text-[var(--color-ink-soft)]">{item.summary}</p>
+              )}
+              {item.blurb && (
+                <p class="mt-3 text-[var(--color-ink)] italic border-l-4 border-[var(--color-orange)] pl-3">
+                  {item.blurb}
+                </p>
+              )}
+              {item.primarySourceUrl && (
+                <p class="mt-3 text-xs text-[var(--color-muted)]">
+                  Primary source: <a href={item.primarySourceUrl} target="_blank" rel="noopener noreferrer">{item.primarySourceLabel ?? item.primarySourceUrl}</a>
+                </p>
+              )}
+            </article>
+          ))}
+        </div>
+      )}
+
+      {recentItems.length === 0 ? (
+        <p class="mt-8 text-[var(--color-muted)] italic">Nothing aggregated yet — run <code>npm run aggregate</code>.</p>
+      ) : (
+        <ul class="mt-8 grid gap-4">
+          {recentItems.map((item: any) => (
+            <li class="poster-card p-4 md:p-5">
+              <p class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-[var(--color-orange-deep)]">
+                {fmtDate(item.publishedAt)} &middot; <span class="text-[var(--color-muted)]">{item.source}</span>
+              </p>
+              <h3 class="mt-1.5 font-extrabold text-lg md:text-xl leading-tight text-[var(--color-blue)]">
+                <a href={item.url} target="_blank" rel="noopener noreferrer" class="no-underline hover:text-[var(--color-orange-deep)]">
+                  {item.title}
+                </a>
+              </h3>
+              {item.summary && item.summary.length > 30 && (
+                <p class="mt-2 text-sm text-[var(--color-ink-soft)] line-clamp-2">{item.summary}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div class="mt-8 flex justify-center">
         <a
-          href={door.href}
-          class="group bg-[var(--color-paper)] p-8 no-underline flex flex-col justify-between min-h-[260px] hover:bg-white transition-colors"
+          href="/feed"
+          class="no-underline inline-flex items-center gap-2 bg-[var(--color-orange)] hover:bg-[var(--color-orange-deep)] text-white font-extrabold uppercase tracking-[0.15em] text-sm px-6 py-3 rounded-full shadow-[0_4px_0_0_var(--color-orange-deep)] hover:shadow-[0_2px_0_0_var(--color-orange-deep)] transition-all"
         >
-          <div>
-            <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">{door.tag}</p>
-            <h2 class="mt-3 font-serif text-3xl group-hover:text-[var(--color-accent)] transition-colors">
-              {door.label}
-            </h2>
-            <p class="mt-3 text-sm text-[var(--color-muted)] leading-relaxed">{door.blurb}</p>
-          </div>
-          <span class="mt-6 text-xs uppercase tracking-wider text-[var(--color-ink)]">
-            Enter &rarr;
-          </span>
+          View all
+          <span aria-hidden="true">&rarr;</span>
         </a>
-      ))}
+      </div>
     </div>
   </section>
 </Layout>

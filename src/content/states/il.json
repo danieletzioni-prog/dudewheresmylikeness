@@ -1,12 +1,17 @@
 {
   "name": "Illinois",
   "abbr": "IL",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Illinois's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Illinois — Cat 2: Right of Publicity Act plus 2024 digital replica amendments. BIPA-adjacent privacy posture.",
+  "rightOfPublicity": "Yes — 765 ILCS 1075 (Right of Publicity Act) covers living and deceased persons against unauthorized commercial use of identity, including name, image, likeness, and voice. Statutory damages of $1,000 minimum or actual damages, plus profits and attorney's fees.",
+  "postMortem": "Yes — 50 years after death. 765 ILCS 1075/30. Transferable and descendible.",
+  "aiCoverage": "Yes. HB 4875 (P.A. 103-0836, operative Jan. 1, 2025) amended 765 ILCS 1075 to add definitions of \"artificial intelligence,\" \"digital replica,\" and \"unauthorized digital replica.\" HB 4762 (P.A. 103-0830, signed Aug. 9, 2024) is the standalone Digital Voice and Likeness Protection Act, which voids contract provisions allowing creation or use of digital replicas in personal/professional services agreements unless the contract is reasonably specific and the individual was represented by counsel or a labor union.",
+  "remedy": "Civil suit under 765 ILCS 1075 with $1,000 statutory floor plus profits and fees. For employment contracts, HB 4762 voids overbroad digital replica clauses, giving you renegotiation leverage.",
+  "whatsInteresting": "Illinois is the second state (after California) to make boilerplate digital-replica contract clauses unenforceable without specific consent and representation. If you're a performer based in Chicago — or signing with a Chicago-based agency, label, or studio — HB 4762 means your standard contract just got friendlier to you. Combined with Illinois's BIPA (Biometric Information Privacy Act, the same statute that gave Facebook a $650M tagging settlement), the state has the most plaintiff-friendly biometric and likeness posture in the country outside California and Tennessee.",
+  "primarySources": [
+    "765 ILCS 1075 (Right of Publicity Act) — [ilga.gov](http://ilga.gov)",
+    "HB 4875 / P.A. 103-0836 — [ilga.gov](http://ilga.gov)",
+    "HB 4762 / P.A. 103-0830 (Digital Voice and Likeness Protection Act) — [ilga.gov](http://ilga.gov)"
+  ],
+  "lastVerified": "2026-05-04"
 }

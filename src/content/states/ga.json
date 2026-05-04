@@ -1,12 +1,16 @@
 {
   "name": "Georgia",
   "abbr": "GA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Georgia's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 4,
+  "tooltip": "Georgia — Cat 4: No codified statutory right of publicity. Common-law misappropriation may apply.",
+  "rightOfPublicity": "Common law only. Georgia has not enacted a codified general right-of-publicity statute. Common-law misappropriation may apply — elements vary, but generally: defendant appropriated plaintiff's identity for commercial value, plaintiff is identifiable, defendant received a benefit. Consult an attorney for state-specific application.",
+  "postMortem": "No codified post-mortem term. Descendibility uncertain at common law.",
+  "aiCoverage": "OCGA § 16-11-90 (synthetic-image NCII, amended 2020). SB 9 (2025-26 election deepfake) stalled in conference as of May 2026.",
+  "remedy": "Common-law misappropriation suit. Federal claims available regardless: Lanham Act § 43(a) false endorsement, defamation, and federal NCII statutes apply nationwide.",
+  "whatsInteresting": "Georgia hasn't built statutory likeness protection. AI-specific statutes exist for narrow areas (election deepfakes, NCII, etc.) but the general right-of-publicity base is common law only.",
+  "primarySources": [
+    "Common-law cases vary by state; consult an attorney licensed in Georgia.",
+    "Federal statutes and any state AI-specific statutes listed above."
+  ],
+  "lastVerified": "2026-05-04"
 }

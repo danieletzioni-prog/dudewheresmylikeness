@@ -1,12 +1,18 @@
 {
   "name": "Florida",
   "abbr": "FL",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Florida's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Florida — Cat 2: Section 540.08 plus deepfake civil action. 40-year post-mortem. Strong NCII enforcement.",
+  "rightOfPublicity": "Yes — Fla. Stat. § 540.08. Covers unauthorized commercial use of name, portrait, photograph, or other likeness for purposes of trade or commercial advertising. Living and deceased persons.",
+  "postMortem": "Yes — 40 years after death. Fla. Stat. § 540.08(5). The right is descendible.",
+  "aiCoverage": "Yes. Fla. Stat. § 836.13 (altered sexual depiction; SB 1798, 2022) creates a civil action for AI-altered sexual images with a $10,000 statutory damages floor. Fla. Stat. § 106.145 (HB 919, 2024) covers political AI disclosure. Brooke's Law (HB 1161, effective June 10, 2025) further expands § 836.13 enforcement.",
+  "remedy": "Civil suit under § 540.08 for general likeness misuse. Civil suit under § 836.13 for altered sexual content with $10,000 statutory floor. Criminal referral for political deepfake violations.",
+  "whatsInteresting": "Florida's $10,000 statutory floor for altered sexual depictions is one of the highest in the country, and Brooke's Law in 2025 added stronger enforcement teeth. If you're a creator whose likeness gets used in AI-generated explicit content, Florida is one of the cleaner states to file in. The state's 40-year post-mortem term plus active production-incentive program also means a lot of estate planning for entertainers passes through Florida domicile considerations.",
+  "primarySources": [
+    "Fla. Stat. § 540.08 — [flsenate.gov](http://flsenate.gov)",
+    "Fla. Stat. § 836.13 (altered sexual depiction) — [flsenate.gov](http://flsenate.gov)",
+    "Fla. Stat. § 106.145 (political AI disclosure)",
+    "HB 1161 (Brooke's Law, eff. June 10, 2025)"
+  ],
+  "lastVerified": "2026-05-04"
 }

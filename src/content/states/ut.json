@@ -1,12 +1,17 @@
 {
   "name": "Utah",
   "abbr": "UT",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Utah's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Utah — Cat 2: Abuse of Personal Identity Act. 2025 amendments expressly cover AI simulations.",
+  "rightOfPublicity": "Yes — Utah Code § 45-3-1 et seq. (Abuse of Personal Identity Act). Covers commercial use of personal identity — name, voice, signature, photograph, likeness, AND expressly \"artificially generated personal identity\" as of the May 7, 2025 amendments (SB 271).",
+  "postMortem": "Coverage unclear in statute. The Abuse of Personal Identity Act focuses on living persons; post-mortem treatment is not codified.",
+  "aiCoverage": "Yes — and recently strengthened. SB 271 (2025) Unauthorized AI Impersonation Amendments expressly added AI-simulated identity to the protected scope. Combined with SB 149 (2024) Utah AI Policy Act creating disclosure requirements for generative AI use in regulated professions.",
+  "remedy": "Civil suit under § 45-3-3 for actual damages plus disgorgement of profits, attorney's fees, and injunctive relief. The 2025 amendments mean an AI-generated impersonation is now expressly within scope, not just analogous.",
+  "whatsInteresting": "Utah's 2025 amendments quietly made it one of the first states to put \"artificially generated\" identity directly in the statute text. Most states are still working through whether their pre-AI statutes reach AI-generated content; Utah just said yes, expressly. If you live or work in Utah and someone runs an AI scam using your face or voice, the statute was written to cover that exact situation.",
+  "primarySources": [
+    "Utah Code § 45-3-1 et seq. (Abuse of Personal Identity Act) — [le.utah.gov](http://le.utah.gov)",
+    "SB 271 (2025) — [le.utah.gov](http://le.utah.gov)",
+    "SB 149 (2024) Utah AI Policy Act"
+  ],
+  "lastVerified": "2026-05-04"
 }

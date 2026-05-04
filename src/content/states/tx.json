@@ -1,12 +1,18 @@
 {
   "name": "Texas",
   "abbr": "TX",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Texas's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Texas — Cat 2: Post-mortem statute strong, but living-person protection is common-law only. SB 1960 didn't pass.",
+  "rightOfPublicity": "**Important nuance** — for living persons, Texas relies on common-law misappropriation, not statute. *Matthews v. Wozencraft*, 15 F.3d 432 (5th Cir. 1994) is the controlling case. For deceased persons, Texas Property Code Chapter 26 creates a statutory property right.",
+  "postMortem": "Yes — 50 years after death. Tex. Prop. Code § 26.012(d). Covers name, voice, signature, photograph, or likeness. Transferable.",
+  "aiCoverage": "Yes, but narrow. Tex. Penal Code § 21.165 (sexual deepfakes, SB 1361 effective Sept. 1, 2023, expanded by SB 441 effective Sept. 1, 2025). Tex. Election Code § 255.004(d)–(e) (political deepfakes, SB 751 effective Sept. 1, 2019). **SB 1960 (digital replicas) did not pass** — left pending in House Judiciary May 21, 2025; 89th Regular Session adjourned sine die June 2, 2025 without enactment.",
+  "remedy": "For living persons, common-law appropriation suit (three elements: defendant appropriated plaintiff's identity for value, plaintiff is identifiable, defendant received benefit). For deceased persons, civil suit under Tex. Prop. Code Ch. 26. For sexual deepfakes, criminal referral plus civil action.",
+  "whatsInteresting": "Texas is the borderline case. The post-mortem statute is real and well-developed (it's why the estates of some Texas-based performers stay managed in-state). But for living persons, you're in common-law territory — three-element appropriation tort, not a clean statutory cause of action with statutory damages. SB 1960 would have fixed this by creating a digital replica statute, but it died in committee in 2025. Until the next session, Texas-based living performers worried about AI clones should know their best statutory hooks are the criminal sexual deepfake and political deepfake provisions, not the right of publicity itself.",
+  "primarySources": [
+    "Tex. Prop. Code Ch. 26 — [statutes.capitol.texas.gov](http://statutes.capitol.texas.gov)",
+    "Tex. Penal Code § 21.165 — [statutes.capitol.texas.gov](http://statutes.capitol.texas.gov)",
+    "Tex. Election Code § 255.004 (SB 751, 2019)",
+    "*Matthews v. Wozencraft*, 15 F.3d 432 (5th Cir. 1994)"
+  ],
+  "lastVerified": "2026-05-04"
 }

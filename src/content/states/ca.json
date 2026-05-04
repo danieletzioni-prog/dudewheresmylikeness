@@ -1,33 +1,18 @@
 {
   "name": "California",
   "abbr": "CA",
-  "rightOfPublicity": "Statutory + common law",
-  "postMortem": "Yes — 70 years (Cal. Civ. Code § 3344.1)",
-  "aiCoverage": "Explicit (AB 2602, AB 1836, SB 926 enacted 2024)",
-  "strength": "explicit",
-  "summary": "Among the most protective regimes in the US. Explicit AI digital-replica rights for performers (AB 2602), post-mortem digital replica protection (AB 1836), and criminal penalties for non-consensual sexual deepfakes.",
-  "keyLegislation": [
-    {
-      "title": "Cal. Civ. Code § 3344 (right of publicity, living)",
-      "url": "https://leginfo.legislature.ca.gov/"
-    },
-    {
-      "title": "Cal. Civ. Code § 3344.1 (post-mortem)",
-      "url": "https://leginfo.legislature.ca.gov/"
-    },
-    {
-      "title": "AB 2602 (2024) — AI digital replicas in employment contracts",
-      "url": "https://leginfo.legislature.ca.gov/"
-    },
-    {
-      "title": "AB 1836 (2024) — post-mortem digital replica rights",
-      "url": "https://leginfo.legislature.ca.gov/"
-    }
+  "category": 1,
+  "tooltip": "California — Cat 1: Strongest in the country. Living and deceased performers, voice clones, AI digital replicas all covered.",
+  "rightOfPublicity": "Yes — strong statutory protection for living people. Cal. Civ. Code § 3344 covers your name, voice, signature, photograph, and likeness. Statutory minimum damages start at $750 per violation, plus profits and attorney's fees.",
+  "postMortem": "Yes — 70 years after death. Cal. Civ. Code § 3344.1(g). The right is fully transferable and descendible, which is why so many estates of deceased performers (Marilyn Monroe, James Dean, etc.) structure their post-mortem rights through California.",
+  "aiCoverage": "Yes, expressly. AB 1836 (Stats. 2024 Ch. 258, eff. Jan. 1, 2025) prohibits unauthorized AI digital replicas of deceased performers in audiovisual works and sound recordings. AB 2602 (Stats. 2024 Ch. 259, adding Cal. Lab. Code § 927, eff. Jan. 1, 2025) makes contracts that allow digital replicas of living performers unenforceable unless the performer was specifically informed and represented by counsel or a union.",
+  "remedy": "Send a written demand citing § 3344 (living) or § 3344.1 (deceased). $750 statutory minimum plus profits and attorney's fees. For employment-side AI replica issues, AB 2602 voids the contract provision and gives the performer leverage to renegotiate.",
+  "whatsInteresting": "California is the playbook every other state is copying. If you're a working performer based anywhere, AB 2602 is the one to know — it kills the boilerplate \"in perpetuity, throughout the universe, in all media now known or hereafter invented\" digital-replica clauses that studios and labels have been quietly slipping into contracts since 2023. You can't be bound by one unless you knew what you were signing and had a lawyer or union rep look at it. AB 1836 covers the deceased side and is why Robin Williams's estate, which has long blocked digital recreations, has the strongest legal basis in the country to keep doing so.",
+  "primarySources": [
+    "Cal. Civ. Code § 3344 (living persons) — [leginfo.legislature.ca.gov](http://leginfo.legislature.ca.gov)",
+    "Cal. Civ. Code § 3344.1 (deceased personalities) — [leginfo.legislature.ca.gov](http://leginfo.legislature.ca.gov)",
+    "AB 1836 (Stats. 2024 Ch. 258) — chaptered text, [leginfo.legislature.ca.gov](http://leginfo.legislature.ca.gov)",
+    "AB 2602 (Stats. 2024 Ch. 259, adding Cal. Lab. Code § 927) — chaptered text, [leginfo.legislature.ca.gov](http://leginfo.legislature.ca.gov)"
   ],
-  "notableCases": [
-    {
-      "title": "TBD — recent AI likeness enforcement to be added."
-    }
-  ],
-  "lastUpdated": "2026-04-19"
+  "lastVerified": "2026-05-04"
 }

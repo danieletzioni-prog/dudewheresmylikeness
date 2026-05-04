@@ -1,12 +1,18 @@
 {
   "name": "Washington",
   "abbr": "WA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Washington's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Washington — Cat 2: Personality Rights Act. 75-year post-mortem for personalities. New 2025 forged digital likeness law.",
+  "rightOfPublicity": "Yes — RCW Chapter 63.60 (Personality Rights Act). Covers name, voice, signature, photograph, and likeness. Distinguishes between \"individuals\" (10-year post-mortem) and \"personalities\" (75-year post-mortem) — a personality is someone whose identity had commercial value at death.",
+  "postMortem": "Yes — 75 years for personalities, 10 years for individuals. RCW 63.60.040.",
+  "aiCoverage": "Yes. RCW 9A.60.045 (forged digital likeness, HB 1205, Ch. 51 Laws of 2025, effective July 27, 2025) creates criminal liability for creating forged digital likenesses with intent to defraud or harm. Plus RCW Ch. 42.62 (synthetic media in elections) and RCW Ch. 9A.86 (fabricated intimate images).",
+  "remedy": "Civil suit under RCW 63.60 with actual damages plus statutory damages of $1,500 minimum and attorney's fees. Criminal complaint for forged digital likeness under RCW 9A.60.045.",
+  "whatsInteresting": "Washington's domicile rule (the *Hendrix* case, *Experience Hendrix v. HendrixLicensing.com*, 762 F.3d 829 (9th Cir. 2014)) means the state's 75-year personality right applies based on where the deceased was domiciled, not where the violation occurred. Jimi Hendrix died domiciled in Washington — that's why his estate sues from there. The 2025 forged digital likeness law adds a criminal hammer that most states don't have.",
+  "primarySources": [
+    "RCW Chapter 63.60 (Personality Rights Act) — [app.leg.wa.gov](http://app.leg.wa.gov)",
+    "HB 1205 / Ch. 51 Laws of 2025 (RCW 9A.60.045 forged digital likeness) — [app.leg.wa.gov](http://app.leg.wa.gov)",
+    "RCW Chapter 42.62 (synthetic media in elections)",
+    "RCW Chapter 9A.86 (fabricated intimate images)"
+  ],
+  "lastVerified": "2026-05-04"
 }

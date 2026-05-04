@@ -1,0 +1,192 @@
+---
+/**
+ * Server-rendered geographic US map.
+ *
+ * Converts us-atlas TopoJSON to SVG at build time using d3-geo. No client-side
+ * map library — only a tiny vanilla script handles hover/click interactions.
+ */
+import { feature } from 'topojson-client';
+import { geoAlbersUsa, geoPath } from 'd3-geo';
+// @ts-ignore — us-atlas ships JSON without types
+import topology from 'us-atlas/states-10m.json';
+import { getCollection } from 'astro:content';
+import { FIPS_TO_ABBR } from '../data/state-fips';
+
+const states = await getCollection('states');
+const byAbbr = new Map(states.map((s) => [s.data.abbr, s.data]));
+
+// @ts-ignore — TopoJSON typing is loose
+const statesGeo = feature(topology, topology.objects.states) as any;
+
+const WIDTH = 975;
+const HEIGHT = 610;
+
+const projection = geoAlbersUsa().fitSize([WIDTH, HEIGHT], statesGeo);
+const pathFn = geoPath(projection);
+
+const categoryFill: Record<number, string> = {
+  1: 'var(--color-cat-1)',
+  2: 'var(--color-cat-2)',
+  3: 'var(--color-cat-3)',
+  4: 'var(--color-cat-4)',
+};
+
+type Feat = { id: string | number; properties: { name: string } };
+const paths = (statesGeo.features as Feat[])
+  .map((f) => {
+    const fips = String(f.id).padStart(2, '0');
+    const abbr = FIPS_TO_ABBR[fips];
+    if (!abbr) return null;
+    const data = byAbbr.get(abbr);
+    const d = pathFn(f as any);
+    if (!d) return null;
+    return {
+      abbr,
+      name: f.properties.name,
+      d,
+      category: (data?.category ?? 4) as 1 | 2 | 3 | 4,
+      tooltip: data?.tooltip ?? f.properties.name,
+    };
+  })
+  .filter((x): x is NonNullable<typeof x> => x !== null);
+
+const stateDataForClient = Object.fromEntries(
+  states.map((s) => [s.data.abbr, s.data]),
+);
+---
+<div class="w-full">
+  <svg
+    id="us-geo-map"
+    viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+    width="100%"
+    class="h-auto select-none block"
+    role="img"
+    aria-label="Map of the United States colored by AI-likeness-rights protection category"
+  >
+    <g>
+      {paths.map((p) => (
+        <path
+          class="state-path"
+          d={p.d}
+          data-abbr={p.abbr}
+          data-name={p.name}
+          data-category={p.category}
+          fill={categoryFill[p.category]}
+          tabindex="0"
+          role="button"
+          aria-label={`${p.name} — Category ${p.category}`}
+        >
+          <title>{p.tooltip}</title>
+        </path>
+      ))}
+    </g>
+  </svg>
+
+  <script id="state-data" type="application/json" set:html={JSON.stringify(stateDataForClient)} is:inline />
+
+  <script is:inline>
+    // Wait for DOMContentLoaded — this script lives inside the USMap component,
+    // which renders before <aside id="state-panel"> in document order. If we run
+    // synchronously the panel element doesn't exist yet and the IIFE bails out
+    // at `if (!panel) return`, which silently disables click handlers.
+    const init = () => {
+      const raw = document.getElementById('state-data')?.textContent ?? '{}';
+      const DATA = JSON.parse(raw);
+      const panel = document.getElementById('state-panel');
+      if (!panel) return;
+      const empty = document.getElementById('state-panel-empty');
+      const content = document.getElementById('state-panel-content');
+
+      // Mirror of the renderInline helper in src/pages/states/[abbr].astro —
+      // converts [text](url) markdown links + **bold** and *italic* to HTML,
+      // escaping everything else. Kept in sync by hand.
+      const escapeHtml = (s) =>
+        String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const renderInline = (text) => {
+        if (!text) return '';
+        let out = '';
+        let i = 0;
+        const linkRe = /\[([^\]]+)\]\(([^)]+)\)/g;
+        let m;
+        while ((m = linkRe.exec(text)) !== null) {
+          out += escapeHtml(text.slice(i, m.index));
+          const url = m[2].startsWith('http') ? m[2] : 'https://' + m[2];
+          out += '<a href="' + escapeHtml(url) +
+            '" target="_blank" rel="noopener noreferrer" ' +
+            'class="underline decoration-[var(--color-orange)] hover:text-[var(--color-orange-deep)]">' +
+            escapeHtml(m[1]) + '</a>';
+          i = m.index + m[0].length;
+        }
+        out += escapeHtml(text.slice(i));
+        out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        out = out.replace(/(^|[\s(])\*([^*]+)\*([\s.,;:)?!]|$)/g, '$1<em>$2</em>$3');
+        return out;
+      };
+
+      const setHtml = (field, value) => {
+        panel.querySelectorAll(`[data-field="${field}"]`).forEach((el) => {
+          el.innerHTML = renderInline(value ?? '');
+        });
+      };
+
+      // Strip the leading "{State} — Cat N: " prefix from the tooltip so the
+      // panel shows just the descriptive clause.
+      const stripTooltipPrefix = (s) =>
+        (s ?? '').replace(/^[^—]+—\s*Cat\s*\d:\s*/, '');
+
+      const CAT_BG = {
+        1: 'var(--color-cat-1)',
+        2: 'var(--color-cat-2)',
+        3: 'var(--color-cat-3)',
+        4: 'var(--color-cat-4)',
+      };
+      const CAT_FG = { 1: '#fff', 2: '#fff', 3: 'var(--color-ink)', 4: 'var(--color-ink)' };
+
+      const select = (abbr) => {
+        const d = DATA[abbr];
+        if (!d) return;
+        empty.hidden = true;
+        content.hidden = false;
+
+        // Category badge
+        const badge = document.getElementById('panel-cat-badge');
+        if (badge) {
+          badge.textContent = `Cat ${d.category}`;
+          badge.style.background = CAT_BG[d.category] || CAT_BG[4];
+          badge.style.color = CAT_FG[d.category] || CAT_FG[4];
+        }
+
+        setHtml('name', d.name);
+        setHtml('tooltipShort', stripTooltipPrefix(d.tooltip));
+        setHtml('rightOfPublicity', d.rightOfPublicity);
+        setHtml('postMortem', d.postMortem);
+        setHtml('aiCoverage', d.aiCoverage);
+        setHtml('remedy', d.remedy ?? '');
+        setHtml('lastVerified', d.lastVerified ?? '');
+
+        const link = document.getElementById('panel-full-link');
+        if (link) link.setAttribute('href', `/states/${abbr.toLowerCase()}`);
+
+        document.querySelectorAll('.state-path').forEach((p) => p.classList.remove('is-active'));
+        const active = document.querySelector(`.state-path[data-abbr="${abbr}"]`);
+        if (active) active.classList.add('is-active');
+      };
+
+      document.querySelectorAll('.state-path').forEach((p) => {
+        const abbr = p.getAttribute('data-abbr');
+        p.addEventListener('click', () => select(abbr));
+        p.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(abbr); }
+        });
+      });
+
+      if (DATA.CA) select('CA');
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</div>

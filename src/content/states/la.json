@@ -1,12 +1,16 @@
 {
   "name": "Louisiana",
   "abbr": "LA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Louisiana's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Louisiana — Cat 2: Allen Toussaint Legacy Act. Audiovisual performance digital replica statute. Audiovisual right expires at death.",
+  "rightOfPublicity": "Yes — La. R.S. 51:470.1 to 470.6 (Allen Toussaint Legacy Act, 2022 Acts No. 425, effective Aug. 1, 2022). Covers name, voice, signature, photograph, and likeness. Plus an audiovisual-performance-specific right.",
+  "postMortem": "Yes for general identity rights — 50 years after death, with a 3-year non-use forfeiture rule. La. R.S. 51:470.3. **Important quirk: the audiovisual performance digital replica right under § 470.4 expires at death** — separate from the general 50-year post-mortem on other identity rights.",
+  "aiCoverage": "Yes — La. R.S. 51:470.4(C) expressly prohibits unauthorized digital replicas in audiovisual performances. This was one of the first state statutes in the country to use the term \"digital replica.\"",
+  "remedy": "Civil suit under La. R.S. 51:470.5 for actual damages plus profits, attorney's fees, and injunctive relief. Treble damages available for willful violations.",
+  "whatsInteresting": "Louisiana was an early mover — the Allen Toussaint Legacy Act predates the Tennessee ELVIS Act by almost two years and was the first state statute in the country to use the specific term \"digital replica\" of an audiovisual performance. The quirk is the death-extinguishment of the audiovisual performance right specifically (general identity rights still get 50 years). For New Orleans-based musicians and the broader Louisiana entertainment industry, this is a real protection — but the audiovisual-right-expires-at-death rule means estate planning matters more than usual.",
+  "primarySources": [
+    "La. R.S. 51:470.1 to 470.6 (Allen Toussaint Legacy Act) — [legis.la.gov](http://legis.la.gov)",
+    "2022 Acts No. 425 (session law)"
+  ],
+  "lastVerified": "2026-05-04"
 }

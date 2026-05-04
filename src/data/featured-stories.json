@@ -1,0 +1,18 @@
+{
+  "_comment": "Hand-curated featured stories. Rendered above the auto-aggregated stream on /feed and the homepage feed preview. Each entry mirrors the aggregated-feed.json item schema, plus a `featured: true` marker and an editorial `blurb` line.",
+  "items": [
+    {
+      "id": "https://techcrunch.com/2026/04/21/youtube-expands-its-ai-likeness-detection-technology-to-celebrities/",
+      "featured": true,
+      "source": "TechCrunch",
+      "title": "YouTube expands its AI likeness detection technology to celebrities",
+      "url": "https://techcrunch.com/2026/04/21/youtube-expands-its-ai-likeness-detection-technology-to-celebrities/",
+      "summary": "YouTube's AI-powered face-detection tool — built with the December 2024 CAA partnership and rolled out to top creators in 2025 — is now available to talent agencies and the celebrities they represent. CAA, UTA, WME, and Untitled Management consulted on the expansion. Subjects can flag and request takedown of unauthorized AI-generated videos featuring their face.",
+      "blurb": "The most concrete platform-side answer yet to the gap state law leaves open. Worth tracking how takedown turnaround actually performs at scale, and whether other platforms follow.",
+      "publishedAt": "2026-04-21T12:00:00.000Z",
+      "tags": ["platform-policy", "industry-news"],
+      "primarySourceUrl": "https://blog.youtube/news-and-events/youtube-likeness-detection-ai-protection/",
+      "primarySourceLabel": "YouTube blog post"
+    }
+  ]
+}

@@ -1,12 +1,16 @@
 {
   "name": "Michigan",
   "abbr": "MI",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Michigan's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 4,
+  "tooltip": "Michigan — Cat 4: No codified statutory right of publicity. Common-law misappropriation may apply.",
+  "rightOfPublicity": "Common law only. Michigan has not enacted a codified general right-of-publicity statute. Common-law misappropriation may apply — elements vary, but generally: defendant appropriated plaintiff's identity for commercial value, plaintiff is identifiable, defendant received a benefit. Consult an attorney for state-specific application.",
+  "postMortem": "No codified post-mortem term. Descendibility uncertain at common law.",
+  "aiCoverage": "Mich. Pub. Acts 263–266 of 2023 (election deepfakes; MCL 168.932f). HBs 4047/4048 of 2025 (AI-NCII).",
+  "remedy": "Common-law misappropriation suit. Federal claims available regardless: Lanham Act § 43(a) false endorsement, defamation, and federal NCII statutes apply nationwide.",
+  "whatsInteresting": "Michigan hasn't built statutory likeness protection. AI-specific statutes exist for narrow areas (election deepfakes, NCII, etc.) but the general right-of-publicity base is common law only.",
+  "primarySources": [
+    "Common-law cases vary by state; consult an attorney licensed in Michigan.",
+    "Federal statutes and any state AI-specific statutes listed above."
+  ],
+  "lastVerified": "2026-05-04"
 }

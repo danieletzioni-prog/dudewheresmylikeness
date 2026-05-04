@@ -1,12 +1,15 @@
 {
   "name": "Kentucky",
   "abbr": "KY",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Kentucky's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 3,
+  "tooltip": "Kentucky — Cat 3: KRS 391.170. 50-year post-mortem for public figures only. No AI-specific overlay yet.",
+  "rightOfPublicity": "Yes — KRS § 391.170. Covers commercial use of name or likeness.",
+  "postMortem": "Yes — 50 years after death, **but only for \"public figures.\"** KRS § 391.170(2). This is unusual — most state post-mortem statutes apply to anyone with commercial value at death, regardless of \"public figure\" status.",
+  "aiCoverage": "No AI-specific statute.",
+  "remedy": "Civil suit under § 391.170 for actual damages plus profits and equitable relief.",
+  "whatsInteresting": "Kentucky's \"public figures only\" qualifier on the post-mortem right is the catch. If you're a public figure (musicians, actors, athletes, well-known commercial personalities), you have 50 years of post-mortem protection. If you're not — say, a successful local businessperson whose face is used commercially — the post-mortem right may not apply at all. The statute doesn't define \"public figure\" with a clean test, so this gets litigated case by case.",
+  "primarySources": [
+    "KRS § 391.170 — [apps.legislature.ky.gov](http://apps.legislature.ky.gov)"
+  ],
+  "lastVerified": "2026-05-04"
 }

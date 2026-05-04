@@ -1,0 +1,16 @@
+{
+  "name": "District of Columbia",
+  "abbr": "DC",
+  "category": 4,
+  "tooltip": "District of Columbia — Cat 4: No codified statutory right of publicity. Common-law misappropriation may apply.",
+  "rightOfPublicity": "Common law only. District of Columbia has not enacted a codified general right-of-publicity statute. Common-law misappropriation may apply — elements vary, but generally: defendant appropriated plaintiff's identity for commercial value, plaintiff is identifiable, defendant received a benefit. Consult an attorney for state-specific application.",
+  "postMortem": "No codified post-mortem term. Descendibility uncertain at common law.",
+  "aiCoverage": "No AI-specific likeness statutes identified.",
+  "remedy": "Common-law misappropriation suit. Federal claims available regardless: Lanham Act § 43(a) false endorsement, defamation, and federal NCII statutes apply nationwide.",
+  "whatsInteresting": "District of Columbia hasn't built statutory likeness protection.",
+  "primarySources": [
+    "Common-law cases vary by state; consult an attorney licensed in District of Columbia.",
+    "Federal statutes and any state AI-specific statutes listed above."
+  ],
+  "lastVerified": "2026-05-04"
+}

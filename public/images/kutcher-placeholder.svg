@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" role="img" aria-label="Placeholder portrait — to be replaced with AI-generated image of Ashton Kutcher">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#edb620"/>
+      <stop offset="55%" stop-color="#e86a17"/>
+      <stop offset="100%" stop-color="#a91d12"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="320" fill="url(#sky)"/>
+  <!-- stylized silhouette -->
+  <ellipse cx="120" cy="140" rx="52" ry="64" fill="#16223d"/>
+  <rect x="60" y="200" width="120" height="120" fill="#16223d"/>
+  <!-- shaggy hair -->
+  <path d="M68 115 Q75 75 120 72 Q165 75 172 115 Q175 95 160 88 Q155 75 120 78 Q85 75 80 88 Q65 95 68 115 Z" fill="#0e1423"/>
+  <!-- trucker-hat sun disc for vibe -->
+  <circle cx="120" cy="44" r="18" fill="#fbeecb" opacity="0.35"/>
+  <text x="120" y="285" text-anchor="middle" font-family="Impact, sans-serif" font-size="14" fill="#fbeecb" letter-spacing="2">PLACEHOLDER</text>
+  <text x="120" y="303" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" fill="#fbeecb" letter-spacing="1">swap with kutcher.png</text>
+</svg>

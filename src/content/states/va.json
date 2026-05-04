@@ -1,12 +1,16 @@
 {
   "name": "Virginia",
   "abbr": "VA",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Virginia's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 3,
+  "tooltip": "Virginia — Cat 3: Va. Code § 8.01-40. 20-year post-mortem. No AI-specific overlay yet.",
+  "rightOfPublicity": "Yes — Va. Code § 8.01-40. Covers unauthorized commercial use of name, portrait, or picture. Functions as a right of publicity per *Town & Country Properties, Inc. v. Riggins*, 457 S.E.2d 356 (Va. 1995).",
+  "postMortem": "Yes — 20 years after death. Va. Code § 8.01-40(B).",
+  "aiCoverage": "No AI-specific statute.",
+  "remedy": "Civil suit under § 8.01-40 for actual damages plus injunctive relief and exemplary damages where the use was knowing.",
+  "whatsInteresting": "Virginia's 20-year post-mortem term is the shortest among states with codified post-mortem rights. The statute is also narrower than most — name, portrait, picture only, no voice, no signature. *Riggins* (the Washington football player case) is the case that established Virginia's statute reaches commercial-value claims, not just dignity-based privacy. For most working entertainers, Virginia is a state where you'd want to forum-shop into a stronger jurisdiction if you have the choice.",
+  "primarySources": [
+    "Va. Code § 8.01-40 — [law.lis.virginia.gov](http://law.lis.virginia.gov)",
+    "*Town & Country Properties, Inc. v. Riggins*, 457 S.E.2d 356 (Va. 1995)"
+  ],
+  "lastVerified": "2026-05-04"
 }

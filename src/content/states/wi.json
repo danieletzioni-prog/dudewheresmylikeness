@@ -1,12 +1,18 @@
 {
   "name": "Wisconsin",
   "abbr": "WI",
-  "rightOfPublicity": "TBD",
-  "postMortem": "TBD",
-  "aiCoverage": "TBD",
-  "strength": "none",
-  "summary": "Research pending. Wisconsin's posture on AI likeness rights has not yet been documented here.",
-  "keyLegislation": [],
-  "notableCases": [],
-  "lastUpdated": "2026-04-19"
+  "category": 2,
+  "tooltip": "Wisconsin — Cat 2: Right of privacy statute. 2025 AI intimate-image act. Common-law publicity from Hirsch v. S.C. Johnson.",
+  "rightOfPublicity": "Yes — Wis. Stat. § 995.50 (titled \"Right of privacy\"; appropriation prong at (2)(am)2.). True commercial publicity rights are also recognized at common law under *Hirsch v. S.C. Johnson & Son, Inc.*, 90 Wis. 2d 379, 280 N.W.2d 129 (1979) — one of the most cited common-law right-of-publicity cases in the country.",
+  "postMortem": "No codified post-mortem term. Common-law treatment uncertain.",
+  "aiCoverage": "Yes. 2023 Wis. Act 123 (Wis. Stat. § 11.1303(2m), election synthetic media, signed March 21, 2024). 2025 Wis. Act 34 (Wis. Stat. § 942.09 synthetic intimate representations). § 995.50(2)(d) expressly cross-references § 942.09 conduct as actionable invasion of privacy.",
+  "remedy": "Civil suit under § 995.50 with $1,000 statutory floor plus actual damages and attorney's fees. Common-law publicity suit under *Hirsch* for true commercial appropriation cases. For AI-generated intimate images, civil action under § 995.50(2)(d) cross-referencing § 942.09.",
+  "whatsInteresting": "Wisconsin is famous in right-of-publicity law for *Hirsch* — Elroy \"Crazylegs\" Hirsch, the football star, sued a shaving gel company for using \"Crazylegs\" as a product name, and the Wisconsin Supreme Court used the case to recognize a robust common-law right of publicity. That case has been cited in dozens of other states' opinions ever since. Statutorily, Wisconsin is privacy-tort only, but the common law is muscular. The 2025 AI intimate representations act creates a clean civil hook by cross-referencing the privacy statute.",
+  "primarySources": [
+    "Wis. Stat. § 995.50 — [docs.legis.wisconsin.gov](http://docs.legis.wisconsin.gov)",
+    "Wis. Stat. § 11.1303 (2023 Wis. Act 123)",
+    "Wis. Stat. § 942.09 (2025 Wis. Act 34)",
+    "*Hirsch v. S.C. Johnson & Son, Inc.*, 90 Wis. 2d 379 (1979)"
+  ],
+  "lastVerified": "2026-05-04"
 }
