@@ -7,12 +7,22 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Override the default OG image (path or absolute URL). */
+  ogImage?: string;
+  /** OG type — "website" for the landing page, "article" for state pages, etc. */
+  ogType?: 'website' | 'article';
 }
 
 const {
   title,
   description = 'A public watchtower for AI likeness rights: what the laws are, how fast the world is moving, and what just happened.',
+  ogImage = '/images/og-image.jpg',
+  ogType = 'website',
 } = Astro.props;
+
+// Resolve absolute URLs against the site URL set in astro.config.mjs.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const absoluteOgImage = new URL(ogImage, Astro.site).toString();
 ---
 <!doctype html>
 <html lang="en">
@@ -20,9 +30,29 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {/* Open Graph (LinkedIn, Facebook, iMessage, Slack, WhatsApp, etc.) */}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="dudewheresmylikeness.ai" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta property="og:image:alt" content="dudewheresmylikeness.ai — AI-generated riff on the Dude, Where's My Car? movie poster, with phones showing fake AI-Kutcher Instagram ads" />
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+
     <title>{title}</title>
   </head>
   <body class="min-h-screen flex flex-col">
