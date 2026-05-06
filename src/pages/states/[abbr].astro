@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import SubscribeForm from '../../components/SubscribeForm.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -117,5 +118,13 @@ const correctionSubject = encodeURIComponent(`Correction: ${state.name}`);
         </a>
       </p>
     </footer>
+
+    <SubscribeForm
+      variant="compact"
+      tag={`via:${state.name.toLowerCase().replace(/\s+/g, '-')}`}
+      heading={`Want to know when ${state.name}'s law changes?`}
+      buttonLabel="Notify me"
+      formId={`bd-state-${state.abbr.toLowerCase()}`}
+    />
   </article>
 </Layout>

@@ -1,0 +1,147 @@
+---
+/**
+ * Buttondown subscribe form, three layout variants.
+ *
+ * The shared client init script lives in Layout.astro and wires up any
+ * `<form data-buttondown-form>` element on the page on DOMContentLoaded.
+ * That keeps logic in one place even though the markup is rendered three
+ * different ways.
+ */
+interface Props {
+  variant: 'banded' | 'compact' | 'footer';
+  tag?: string; // e.g. "via:tennessee" — sent as Buttondown subscriber tag
+  heading?: string;
+  body?: string;
+  buttonLabel?: string;
+  formId?: string;
+}
+
+const {
+  variant,
+  tag,
+  heading,
+  body,
+  buttonLabel = 'Subscribe',
+  formId,
+} = Astro.props;
+
+// Per-variant Tailwind class strings — kept literal so Tailwind's JIT can
+// see them at build time.
+const inputBase =
+  'w-full px-4 py-2.5 rounded-full border-2 bg-white text-[var(--color-ink)] placeholder-[var(--color-muted)] focus:outline-none text-sm font-sans';
+const buttonBase =
+  'no-underline whitespace-nowrap font-extrabold uppercase tracking-[0.12em] text-xs px-5 py-2.5 rounded-full transition-all';
+---
+{variant === 'banded' && (
+  <section class="relative max-w-5xl mx-auto px-5 my-12">
+    <div class="poster-card overflow-hidden p-7 md:p-10 bg-gradient-to-br from-[var(--color-cream-deep)]/0 via-white to-[var(--color-orange)]/10 border-[3px] border-[var(--color-orange)] shadow-[0_6px_0_0_var(--color-orange-deep),0_14px_30px_-10px_rgba(20,38,64,0.25)]">
+      <div class="grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-center">
+        <div>
+          <span class="poster-bar">Stay current</span>
+          <h2 class="mt-4 display text-[clamp(1.75rem,3.5vw,2.5rem)] leading-tight">
+            <span class="text-[var(--color-ink)]">The law is moving.</span><br/>
+            <span class="text-[var(--color-orange)]">Don't get caught flat-footed.</span>
+          </h2>
+          <p class="mt-3 text-[var(--color-ink-soft)] max-w-md leading-snug">
+            Get a monthly digest of state legislation, court rulings, and platform policy
+            changes affecting AI likeness rights. No spam. Unsubscribe anytime.
+          </p>
+        </div>
+        <form
+          data-buttondown-form
+          data-variant="banded"
+          data-tag={tag}
+          id={formId}
+          class="grid gap-3"
+          novalidate
+        >
+          <div class="grid gap-2">
+            <label class="sr-only" for={`${formId ?? 'bd-banded'}-email`}>Email address</label>
+            <input
+              id={`${formId ?? 'bd-banded'}-email`}
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@example.com"
+              class={`${inputBase} border-[var(--color-blue)]/40 focus:border-[var(--color-orange)]`}
+            />
+            <button
+              type="submit"
+              class={`${buttonBase} bg-[var(--color-orange)] hover:bg-[var(--color-orange-deep)] text-white shadow-[0_4px_0_0_var(--color-orange-deep)] hover:shadow-[0_2px_0_0_var(--color-orange-deep)]`}
+              data-default-label="Subscribe"
+            >Subscribe</button>
+          </div>
+          <p data-form-status class="hidden text-xs font-extrabold uppercase tracking-[0.14em]" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'compact' && (
+  <aside class="mt-10 pt-6 border-t border-[var(--color-blue)]/15">
+    <form
+      data-buttondown-form
+      data-variant="compact"
+      data-tag={tag}
+      id={formId}
+      class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start"
+      novalidate
+    >
+      <div class="grid gap-2">
+        <label for={`${formId ?? 'bd-compact'}-email`} class="text-sm font-extrabold text-[var(--color-blue)]">
+          {heading ?? 'Get updates when this state’s law changes.'}
+        </label>
+        <input
+          id={`${formId ?? 'bd-compact'}-email`}
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder="you@example.com"
+          class={`${inputBase} border-[var(--color-blue)]/40 focus:border-[var(--color-orange)]`}
+        />
+      </div>
+      <button
+        type="submit"
+        class={`${buttonBase} sm:self-end bg-[var(--color-blue)] hover:bg-[var(--color-blue-deep)] text-white shadow-[0_3px_0_0_var(--color-blue-deep)]`}
+        data-default-label={buttonLabel}
+      >{buttonLabel}</button>
+      <p data-form-status class="hidden text-xs font-extrabold uppercase tracking-[0.12em] sm:col-span-2" role="status" aria-live="polite"></p>
+    </form>
+  </aside>
+)}
+
+{variant === 'footer' && (
+  <form
+    data-buttondown-form
+    data-variant="footer"
+    data-tag={tag}
+    id={formId}
+    class="grid gap-2 sm:flex sm:items-center sm:gap-3"
+    novalidate
+  >
+    <label
+      for={`${formId ?? 'bd-footer'}-email`}
+      class="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--color-orange-deep)] sm:whitespace-nowrap"
+    >
+      {heading ?? 'Get updates when state laws change'}
+    </label>
+    <input
+      id={`${formId ?? 'bd-footer'}-email`}
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com"
+      class="px-3 py-1.5 rounded-full border-2 border-[var(--color-blue)]/40 bg-white text-[var(--color-ink)] placeholder-[var(--color-muted)] focus:outline-none focus:border-[var(--color-orange)] text-sm font-sans w-full sm:max-w-[16rem]"
+    />
+    <button
+      type="submit"
+      class={`${buttonBase} text-xs px-4 py-1.5 bg-[var(--color-blue)] hover:bg-[var(--color-blue-deep)] text-white shadow-[0_2px_0_0_var(--color-blue-deep)] sm:whitespace-nowrap`}
+      data-default-label="Subscribe"
+    >Subscribe</button>
+    <p data-form-status class="hidden text-[10px] font-extrabold uppercase tracking-[0.12em] basis-full text-[var(--color-muted)]" role="status" aria-live="polite"></p>
+  </form>
+)}

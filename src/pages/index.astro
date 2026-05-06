@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import USMap from '../components/USMap.astro';
+import SubscribeForm from '../components/SubscribeForm.astro';
 import { POST_MORTEM_ROWS } from '../data/post-mortem';
 import aggregated from '../data/aggregated-feed.json';
 import featured from '../data/featured-stories.json';
@@ -328,6 +329,9 @@ const categoryClassName: Record<number, string> = {
       })();
     </script>
   </section>
+
+  {/* ---------- EMAIL CAPTURE — banded ---------- */}
+  <SubscribeForm variant="banded" formId="bd-banded" />
 
   {/* ---------- FEED PREVIEW ---------- */}
   <section id="feed" class="relative pt-16 pb-20 scroll-mt-20">

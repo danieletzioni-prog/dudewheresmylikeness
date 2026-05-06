@@ -42,5 +42,92 @@ const {
     </main>
     <Footer />
     <KutcherWidget />
+
+    {/* Shared init for all <SubscribeForm> instances on the page. */}
+    <script is:inline>
+      (() => {
+        const init = () => {
+          if (window.__buttondownInit) return;
+          window.__buttondownInit = true;
+
+          const forms = document.querySelectorAll('form[data-buttondown-form]');
+          forms.forEach((form) => {
+            const button = form.querySelector('button[type="submit"]');
+            const input = form.querySelector('input[name="email"]');
+            const status = form.querySelector('[data-form-status]');
+            if (!button || !input || !status) return;
+
+            const setStatus = (text, kind) => {
+              status.classList.remove('hidden');
+              status.textContent = text;
+              status.dataset.kind = kind;
+              const cls = {
+                ok: 'text-[var(--color-blue)]',
+                err: 'text-[var(--color-red)]',
+                info: 'text-[var(--color-muted)]',
+              }[kind] || '';
+              ['text-[var(--color-blue)]', 'text-[var(--color-red)]', 'text-[var(--color-muted)]', 'text-[var(--color-cream)]/80'].forEach(
+                (c) => status.classList.remove(c),
+              );
+              if (cls) status.classList.add(cls);
+            };
+
+            form.addEventListener('submit', async (e) => {
+              e.preventDefault();
+              const email = (input.value || '').trim();
+              if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                setStatus('Please enter a valid email.', 'err');
+                input.focus();
+                return;
+              }
+
+              const original = button.dataset.defaultLabel || button.textContent || 'Subscribe';
+              button.disabled = true;
+              button.textContent = '…';
+              setStatus('', 'info');
+              status.classList.add('hidden');
+
+              const tag = form.dataset.tag;
+              const tags = tag ? [tag] : [];
+
+              try {
+                const res = await fetch('/api/subscribe', {
+                  method: 'POST',
+                  headers: { 'content-type': 'application/json' },
+                  body: JSON.stringify({ email, tags }),
+                });
+                const data = await res.json().catch(() => ({}));
+
+                if (data && data.ok) {
+                  // Inline success: replace form contents with confirmation.
+                  form.innerHTML =
+                    '<p class="text-sm font-extrabold uppercase tracking-[0.12em] text-[var(--color-blue)]">' +
+                    '✓ Subscribed. Check your inbox.' +
+                    (data.simulated ? ' <span class="text-[var(--color-muted)] normal-case font-normal tracking-normal">(preview mode — Buttondown key not yet configured.)</span>' : '') +
+                    '</p>';
+                  return;
+                }
+
+                setStatus(
+                  (data && data.error) || 'Subscription failed. Please try again later.',
+                  'err',
+                );
+              } catch (err) {
+                setStatus('Network error. Please try again.', 'err');
+              } finally {
+                button.disabled = false;
+                button.textContent = original;
+              }
+            });
+          });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
   </body>
 </html>
