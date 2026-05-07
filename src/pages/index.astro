@@ -2,15 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import USMap from '../components/USMap.astro';
 import SubscribeForm from '../components/SubscribeForm.astro';
-import { POST_MORTEM_ROWS } from '../data/post-mortem';
 import aggregated from '../data/aggregated-feed.json';
 import featured from '../data/featured-stories.json';
-
-// Default sort: descending by termYears, ties broken alphabetically.
-const postMortemSorted = [...POST_MORTEM_ROWS].sort((a, b) => {
-  if (b.termYears !== a.termYears) return b.termYears - a.termYears;
-  return a.jurisdiction.localeCompare(b.jurisdiction);
-});
 
 const featuredItems = (featured.items ?? []).filter((x: any) => x.featured);
 const featuredIds = new Set(featuredItems.map((x: any) => x.id));
@@ -174,160 +167,28 @@ const categoryClassName: Record<number, string> = {
     </div>
   </section>
 
-  {/* ---------- POST-MORTEM TABLE ---------- */}
-  <section id="post-mortem" class="relative pt-12 pb-16 scroll-mt-20">
+  {/* ---------- POST-MORTEM TEASER ---------- */}
+  <section class="relative pt-12 pb-12">
     <div class="max-w-5xl mx-auto px-5">
-      <span class="poster-bar">Post-Mortem</span>
-      <h2 class="mt-5 display text-[clamp(2rem,4.5vw,3.25rem)] leading-[0.98]">
-        <span class="text-[var(--color-blue)]">Post-Mortem Protection Term</span><br/>
-        <span class="text-[var(--color-orange)]">By State.</span>
-      </h2>
-      <p class="mt-5 max-w-3xl text-[var(--color-ink-soft)] leading-snug">
-        How long your right of publicity outlives you, jurisdiction by jurisdiction. Click a column header to re-sort. Type to filter.
-      </p>
-
-      <div class="mt-6 flex items-center gap-3">
-        <label for="pm-search" class="sr-only">Filter jurisdictions</label>
-        <input
-          id="pm-search"
-          type="search"
-          placeholder="Filter by jurisdiction…"
-          class="w-full md:w-80 px-4 py-2 rounded-full border-2 border-[var(--color-blue)]/40 bg-white text-[var(--color-ink)] placeholder-[var(--color-muted)] focus:outline-none focus:border-[var(--color-orange)] text-sm font-sans"
-        />
-        <span id="pm-count" class="text-xs font-extrabold uppercase tracking-[0.15em] text-[var(--color-muted)]">{postMortemSorted.length} jurisdictions</span>
-      </div>
-
-      <div class="mt-5 poster-card overflow-x-auto">
-        <table id="pm-table" class="w-full text-sm border-collapse">
-          <thead>
-            <tr class="bg-[var(--color-blue)] text-white">
-              <th data-sort="jurisdiction" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]">
-                Jurisdiction <span class="pm-arrow ml-1 opacity-60"></span>
-              </th>
-              <th data-sort="termYears" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]" aria-sort="descending">
-                Term <span class="pm-arrow ml-1">▼</span>
-              </th>
-              <th data-sort="citation" class="text-left px-4 py-3 font-extrabold uppercase tracking-[0.12em] text-xs cursor-pointer select-none hover:bg-[var(--color-blue-deep)]">
-                Citation <span class="pm-arrow ml-1 opacity-60"></span>
-              </th>
-            </tr>
-          </thead>
-          <tbody id="pm-tbody">
-            {postMortemSorted.map((row) => (
-              <tr
-                class="border-t border-[var(--color-blue)]/15 hover:bg-[var(--color-cat-4)]/40 transition-colors"
-                data-jurisdiction={row.jurisdiction}
-                data-term-years={row.termYears}
-                data-citation={row.citation}
-              >
-                <td class="px-4 py-3 font-extrabold text-[var(--color-blue)] whitespace-nowrap">{row.jurisdiction}</td>
-                <td class="px-4 py-3 text-[var(--color-ink)]">{row.term}</td>
-                <td class="px-4 py-3 text-[var(--color-ink-soft)] font-mono text-xs whitespace-nowrap">{row.citation}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div id="pm-empty" class="hidden p-6 text-center text-[var(--color-muted)] italic text-sm">
-          No jurisdictions match.
+      <div class="poster-card p-6 md:p-10">
+        <span class="poster-bar">Post-Mortem</span>
+        <h2 class="mt-5 display text-[clamp(1.75rem,4vw,2.75rem)] leading-tight">
+          <span class="text-[var(--color-blue)]">Post-mortem terms vary from</span> <span class="text-[var(--color-orange)]">100 years to none.</span>
+        </h2>
+        <p class="mt-4 text-[var(--color-ink-soft)] max-w-2xl">
+          Indiana protects a person's likeness for 100 years after death. Virginia protects it for 20. Most states don't protect it at all.
+        </p>
+        <div class="mt-6">
+          <a
+            href="/post-mortem-terms"
+            class="no-underline inline-flex items-center gap-2 bg-[var(--color-orange)] hover:bg-[var(--color-orange-deep)] text-white font-extrabold uppercase tracking-[0.15em] text-sm px-6 py-3 rounded-full shadow-[0_4px_0_0_var(--color-orange-deep)] hover:shadow-[0_2px_0_0_var(--color-orange-deep)] transition-all"
+          >
+            See the full state-by-state table
+            <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
       </div>
-
-      <p class="mt-5 text-xs text-[var(--color-muted)] leading-relaxed max-w-3xl">
-        States not listed (Massachusetts, Rhode Island, Wisconsin, Utah, and all common-law jurisdictions) do not have a codified post-mortem term.
-      </p>
     </div>
-
-    <script is:inline>
-      (() => {
-        const init = () => {
-          const tbody = document.getElementById('pm-tbody');
-          const search = document.getElementById('pm-search');
-          const empty = document.getElementById('pm-empty');
-          const count = document.getElementById('pm-count');
-          if (!tbody || !search) return;
-
-          const rows = Array.from(tbody.querySelectorAll('tr'));
-          let sortKey = 'termYears';
-          let sortDir = 'desc';
-          let filter = '';
-
-          const applyFilter = () => {
-            const q = filter.trim().toLowerCase();
-            let shown = 0;
-            rows.forEach((r) => {
-              const j = r.dataset.jurisdiction.toLowerCase();
-              const visible = !q || j.includes(q);
-              r.hidden = !visible;
-              if (visible) shown++;
-            });
-            empty.classList.toggle('hidden', shown > 0);
-            const total = rows.length;
-            count.textContent = q
-              ? shown + ' of ' + total + ' jurisdiction' + (total === 1 ? '' : 's')
-              : total + ' jurisdiction' + (total === 1 ? '' : 's');
-          };
-
-          const sort = () => {
-            const cmp = sortKey === 'termYears'
-              ? (a, b) => Number(a.dataset.termYears) - Number(b.dataset.termYears)
-              : (a, b) => a.dataset[sortKey].localeCompare(b.dataset[sortKey]);
-            const sorted = [...rows].sort((a, b) => {
-              const r = cmp(a, b);
-              if (r !== 0) return sortDir === 'desc' ? -r : r;
-              // Tie-break by jurisdiction A→Z always.
-              return a.dataset.jurisdiction.localeCompare(b.dataset.jurisdiction);
-            });
-            sorted.forEach((r) => tbody.appendChild(r));
-          };
-
-          const updateArrows = () => {
-            document.querySelectorAll('#pm-table thead th').forEach((th) => {
-              const arrow = th.querySelector('.pm-arrow');
-              if (!arrow) return;
-              const key = th.dataset.sort;
-              if (key === sortKey) {
-                arrow.textContent = sortDir === 'desc' ? '▼' : '▲';
-                arrow.classList.remove('opacity-60');
-                th.setAttribute('aria-sort', sortDir === 'desc' ? 'descending' : 'ascending');
-              } else {
-                arrow.textContent = '';
-                arrow.classList.add('opacity-60');
-                th.removeAttribute('aria-sort');
-              }
-            });
-          };
-
-          document.querySelectorAll('#pm-table thead th[data-sort]').forEach((th) => {
-            th.addEventListener('click', () => {
-              const key = th.dataset.sort;
-              if (sortKey === key) {
-                sortDir = sortDir === 'desc' ? 'asc' : 'desc';
-              } else {
-                sortKey = key;
-                // Sensible defaults per column type.
-                sortDir = key === 'termYears' ? 'desc' : 'asc';
-              }
-              sort();
-              updateArrows();
-            });
-          });
-
-          search.addEventListener('input', (e) => {
-            filter = e.target.value;
-            applyFilter();
-          });
-
-          // Initial state already matches default sort; just sync arrows.
-          updateArrows();
-        };
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', init);
-        } else {
-          init();
-        }
-      })();
-    </script>
   </section>
 
   {/* ---------- EMAIL CAPTURE — banded ---------- */}

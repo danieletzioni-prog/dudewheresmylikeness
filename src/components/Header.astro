@@ -1,9 +1,11 @@
 ---
 const pathname = Astro.url.pathname;
 const feedActive = pathname.startsWith('/feed') && pathname !== '/';
+const postMortemActive = pathname.startsWith('/post-mortem-terms');
 
 const links = [
   { href: '/#map', label: 'Map', active: false },
+  { href: '/post-mortem-terms', label: 'Post-Mortem Terms', active: postMortemActive },
   { href: feedActive ? '/feed' : '/#feed', label: 'Feed', active: feedActive },
 ];
 ---
