@@ -7,12 +7,14 @@
   "postMortem": "Yes — 40 years after death. Fla. Stat. § 540.08(5). The right is descendible.",
   "aiCoverage": "Yes. Fla. Stat. § 836.13 (altered sexual depiction; SB 1798, 2022) creates a civil action for AI-altered sexual images with a $10,000 statutory damages floor. Fla. Stat. § 106.145 (HB 919, 2024) covers political AI disclosure. Brooke's Law (HB 1161, effective June 10, 2025) further expands § 836.13 enforcement.",
   "remedy": "Civil suit under § 540.08 for general likeness misuse. Civil suit under § 836.13 for altered sexual content with $10,000 statutory floor. Criminal referral for political deepfake violations.",
-  "whatsInteresting": "Florida's $10,000 statutory floor for altered sexual depictions is one of the highest in the country, and Brooke's Law in 2025 added stronger enforcement teeth. If you're a creator whose likeness gets used in AI-generated explicit content, Florida is one of the cleaner states to file in. The state's 40-year post-mortem term plus active production-incentive program also means a lot of estate planning for entertainers passes through Florida domicile considerations.",
+  "whatsInteresting": "Florida's $10,000 statutory floor for altered sexual depictions is one of the highest in the country, and Brooke's Law in 2025 added stronger enforcement teeth. If you're a creator whose likeness gets used in AI-generated explicit content, Florida is one of the cleaner states to file in. The state's 40-year post-mortem term plus active production-incentive program also means a lot of estate planning for entertainers passes through Florida domicile considerations. In 2026, Florida tried twice to pass an AI Bill of Rights (SB 482 / HB 1395 in the regular session, SB 2D in special session) that would have banned commercial AI-generated use of name, portrait, photo, image, or likeness without express consent, with $10,000+ DLA fines. The Senate passed both versions 37-1, but the House never took up SB 482 (died in messages March 13, 2026), and Speaker Daniel Perez announced on April 28 that the special session would address only redistricting — killing SB 2D the same day. Florida's AI Bill of Rights is dead for 2026 absent another special session. The existing § 540.08 framework and 2024 deepfake/election infrastructure remain intact, but the state's forward-looking position on AI likeness rights has materially softened.",
   "primarySources": [
     "Fla. Stat. § 540.08 — [flsenate.gov](http://flsenate.gov)",
     "Fla. Stat. § 836.13 (altered sexual depiction) — [flsenate.gov](http://flsenate.gov)",
     "Fla. Stat. § 106.145 (political AI disclosure)",
-    "HB 1161 (Brooke's Law, eff. June 10, 2025)"
+    "HB 1161 (Brooke's Law, eff. June 10, 2025)",
+    "SB 482 / HB 1395 (Brodeur, 'AI Bill of Rights,' regular session — died March 13, 2026) — [flsenate.gov](http://flsenate.gov)",
+    "SB 2D (Brodeur, 'AI Bill of Rights,' special session — died April 28, 2026) — [flsenate.gov](http://flsenate.gov)"
   ],
-  "lastVerified": "2026-05-04"
+  "lastVerified": "2026-05-09"
 }

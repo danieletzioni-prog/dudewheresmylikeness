@@ -73,6 +73,86 @@ const parser = new XMLParser({
   trimValues: true,
 });
 
+// ---------- Source quality denylist (applied BEFORE dedup) ----------
+// These are either social platforms repackaging news, low-signal aggregators,
+// or wrappers we couldn't unwrap to a primary outlet URL. Drop them so they
+// don't take a slot that should belong to the original publisher.
+//
+// Match logic:
+//   - Exact hostname (e.g., "x.com" matches x.com but NOT subdomain.x.com)
+//   - Or trailing-domain pattern starting with "." (e.g., ".substack.com"
+//     matches anything.substack.com)
+const SOURCE_DENYLIST = [
+  'facebook.com',
+  'm.facebook.com',
+  'x.com',
+  'twitter.com',
+  'mobile.twitter.com',
+  'reddit.com',
+  'old.reddit.com',
+  'np.reddit.com',
+  'linkedin.com',
+  'tiktok.com',
+  'youtube.com',           // YouTube videos
+  'm.youtube.com',
+  'youtu.be',
+  '.substack.com',         // any *.substack.com
+];
+
+// blog.youtube.com is the official YouTube blog — explicitly allowed even
+// though youtube.com is denied. Keep this list for any future special-cases.
+const SOURCE_ALLOWLIST = [
+  'blog.youtube',
+  'blog.youtube.com',
+];
+
+const isAllowed = (hostname) =>
+  SOURCE_ALLOWLIST.some((h) => hostname === h || hostname.endsWith('.' + h));
+
+const isDeniedUrl = (url) => {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    if (isAllowed(host)) return false;
+    return SOURCE_DENYLIST.some((d) =>
+      d.startsWith('.') ? host.endsWith(d) : host === d,
+    );
+  } catch {
+    return true; // malformed URL → drop
+  }
+};
+
+// Use the publisher domain for the denylist when available (i.e., for
+// Google News items where we can read `<source url>`); fall back to the
+// canonical URL otherwise.
+const isDenied = (item) => {
+  if (item.publisherUrl) return isDeniedUrl(item.publisherUrl);
+  return isDeniedUrl(item.url);
+};
+
+// ---------- Near-duplicate detection ----------
+const STOP_WORDS = new Set([
+  'the', 'a', 'an', 'of', 'for', 'to', 'in', 'on', 'and',
+]);
+
+// Normalize title → token list for similarity comparison.
+const titleTokens = (title) =>
+  String(title ?? '')
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w.length > 1 && !STOP_WORDS.has(w));
+
+const jaccard = (aTokens, bTokens) => {
+  const A = new Set(aTokens);
+  const B = new Set(bTokens);
+  if (A.size === 0 || B.size === 0) return 0;
+  let intersect = 0;
+  for (const t of A) if (B.has(t)) intersect++;
+  return intersect / (A.size + B.size - intersect);
+};
+
+const HOURS_48_MS = 48 * 60 * 60 * 1000;
+
 const stripHtml = (s) =>
   String(s ?? '')
     .replace(/<script[\s\S]*?<\/script>/gi, '')
@@ -95,9 +175,10 @@ const truncate = (s, n) => {
   return (lastSpace > n * 0.6 ? cut.slice(0, lastSpace) : cut) + '…';
 };
 
-// Google News wraps real URLs in news.google.com redirect URLs. Try to
-// extract the underlying article URL from common wrapper formats.
-const unwrapGoogleNews = (url) => {
+// Google News wraps real URLs. The OLD format used `?url=...`; the modern
+// format uses opaque encoded article IDs that can only be resolved by
+// actually following the redirect chain at runtime.
+const unwrapGoogleNewsQuery = (url) => {
   if (!url) return url;
   if (!url.includes('news.google.com')) return url;
   try {
@@ -105,12 +186,20 @@ const unwrapGoogleNews = (url) => {
     const direct = u.searchParams.get('url');
     if (direct) return direct;
   } catch {}
-  return url; // fall back to original; the link still works.
+  return url; // unchanged — needs live unwrap (see resolveGoogleNewsLive).
 };
+
+// Modern Google News article URLs (`/rss/articles/CBMi...`) cannot be
+// unwrapped server-side: the encoded ID is an opaque token that Google's
+// JS client decodes via a backend RPC call, and the article page contains
+// no redirect target in its HTML. Fortunately each GN RSS item carries a
+// `<source url="...">` element with the actual publisher domain. We use
+// that to apply the denylist correctly while leaving the wrapper URL in
+// place for clickthroughs (browsers run the JS redirect transparently).
 
 const canonicalize = (url) => {
   try {
-    const u = new URL(unwrapGoogleNews(url));
+    const u = new URL(unwrapGoogleNewsQuery(url));
     // Strip common tracking params.
     [...u.searchParams.keys()]
       .filter((k) => /^(utm_|fbclid|gclid|mc_cid|mc_eid|s_cid|ocid|amp)/i.test(k))
@@ -178,6 +267,17 @@ const normalizeItem = (raw, source) => {
 
   if (!matchesKeyword(haystack)) return null;
 
+  // Google News RSS includes `<source url="https://variety.com">Variety</source>`
+  // — capture that domain so the denylist can run against the real publisher
+  // even though the link itself stays wrapped on news.google.com.
+  let publisherUrl = null;
+  if (source.id.startsWith('gn-')) {
+    const srcRaw = raw.source;
+    if (typeof srcRaw === 'object' && srcRaw && srcRaw['@_url']) {
+      publisherUrl = String(srcRaw['@_url']).trim() || null;
+    }
+  }
+
   // Google News bakes the real outlet into the title as " - {Outlet}".
   // Strip it from the title and surface the outlet as the displayed source.
   let displayTitle = stripHtml(title);
@@ -200,6 +300,7 @@ const normalizeItem = (raw, source) => {
     summary: truncate(cleanSummary, 320),
     publishedAt: parseDate(dateRaw),
     tags: tagsFor(haystack),
+    publisherUrl, // null for non-GN sources; used by isDenied()
   };
 };
 
@@ -237,20 +338,69 @@ const fetchOne = async (source) => {
 const main = async () => {
   console.log(`Aggregating ${SOURCES.length} feeds…`);
   const all = (await Promise.all(SOURCES.map(fetchOne))).flat();
+  const stage1_keyword = all.length;
 
-  // Dedupe by canonical URL.
-  const seen = new Map();
-  for (const it of all) {
-    const existing = seen.get(it.id);
-    if (!existing) { seen.set(it.id, it); continue; }
-    // Merge tags; keep earliest source.
-    const merged = { ...existing, tags: [...new Set([...existing.tags, ...it.tags])] };
-    seen.set(it.id, merged);
+  // ---------- Stage 2: source-quality denylist ----------
+  // Applied before dedup so a denylisted item never takes a slot that should
+  // belong to a higher-quality source covering the same story. For GN items
+  // we check the publisher URL captured from `<source url>`; for others we
+  // check the canonical URL.
+  const denyCount = { byHost: new Map(), total: 0 };
+  const afterDenylist = all.filter((it) => {
+    if (!isDenied(it)) return true;
+    denyCount.total++;
+    try {
+      const checkUrl = it.publisherUrl || it.url;
+      const h = new URL(checkUrl).hostname.toLowerCase();
+      denyCount.byHost.set(h, (denyCount.byHost.get(h) || 0) + 1);
+    } catch {}
+    return false;
+  });
+
+  // ---------- Stage 3: exact-URL dedupe (cheap pass before fuzzy) ----------
+  const byUrl = new Map();
+  for (const it of afterDenylist) {
+    const existing = byUrl.get(it.id);
+    if (!existing) { byUrl.set(it.id, it); continue; }
+    // Merge tags.
+    existing.tags = [...new Set([...existing.tags, ...it.tags])];
+  }
+  const afterUrlDedupe = [...byUrl.values()];
+
+  // ---------- Stage 4: near-duplicate collapse (title similarity + 48h) ----------
+  // Sort earliest-first so the iteration keeps the EARLIEST occurrence of a
+  // story (the one that broke it) and drops later restatements.
+  const sortedAsc = [...afterUrlDedupe].sort((a, b) => {
+    const at = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+    const bt = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+    return at - bt;
+  });
+  for (const it of sortedAsc) {
+    it._tokens = titleTokens(it.title);
+    it._timeMs = it.publishedAt ? new Date(it.publishedAt).getTime() : 0;
+  }
+  const finalItems = [];
+  let dupesCollapsed = 0;
+  for (const item of sortedAsc) {
+    const dupe = finalItems.find((kept) => {
+      if (Math.abs(item._timeMs - kept._timeMs) > HOURS_48_MS) return false;
+      return jaccard(item._tokens, kept._tokens) > 0.7;
+    });
+    if (dupe) {
+      dupesCollapsed++;
+      // Merge tags onto the surviving (earlier) entry.
+      dupe.tags = [...new Set([...dupe.tags, ...item.tags])];
+    } else {
+      finalItems.push(item);
+    }
   }
 
-  const items = [...seen.values()]
+  // Strip the temporary fields (and publisherUrl, which only mattered for
+  // the denylist) and sort newest-first for output.
+  const items = finalItems
+    .map(({ _tokens, _timeMs, publisherUrl, ...rest }) => rest)
     .sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
-    .slice(0, 200); // hard cap to keep build output bounded
+    .slice(0, 200);
 
   mkdirSync(dirname(OUT_PATH), { recursive: true });
   const payload = {
@@ -261,8 +411,21 @@ const main = async () => {
   };
   writeFileSync(OUT_PATH, JSON.stringify(payload, null, 2) + '\n');
 
-  console.log(`\n→ Wrote ${items.length} items to ${OUT_PATH.replace(REPO_ROOT, '.')}`);
-  console.log(`   Generated at ${payload.generatedAt}`);
+  // ---------- Stage counts ----------
+  console.log('');
+  console.log('---------------- pipeline counts ----------------');
+  console.log(`  after fetch + keyword filter: ${String(stage1_keyword).padStart(4)}`);
+  console.log(`  after source denylist:        ${String(afterDenylist.length).padStart(4)}  (-${denyCount.total} denied)`);
+  console.log(`  after exact-URL dedupe:       ${String(afterUrlDedupe.length).padStart(4)}  (-${afterDenylist.length - afterUrlDedupe.length} url-dups)`);
+  console.log(`  after near-dup collapse:      ${String(finalItems.length).padStart(4)}  (-${dupesCollapsed} near-dups)`);
+  console.log(`  FINAL (cap 200):              ${String(items.length).padStart(4)}`);
+  if (denyCount.byHost.size > 0) {
+    const top = [...denyCount.byHost.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+    console.log('  top denied hosts:             ' + top.map(([h, n]) => `${h} (${n})`).join(', '));
+  }
+  console.log('-------------------------------------------------');
+  console.log(`→ Wrote ${items.length} items to ${OUT_PATH.replace(REPO_ROOT, '.')}`);
+  console.log(`  Generated at ${payload.generatedAt}`);
 };
 
 await main();
