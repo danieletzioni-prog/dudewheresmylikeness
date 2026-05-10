@@ -2,7 +2,7 @@
 
 **Purpose**: orient a future Claude Code session in 5 minutes. Read this before doing anything.
 
-Last updated: **May 10, 2026**
+Last updated: **May 11, 2026** (after commit `209b0ed`)
 
 ---
 
@@ -10,21 +10,9 @@ Last updated: **May 10, 2026**
 
 - **Live URL**: https://www.dudewheresmylikeness.ai (also `https://dudewheresmylikeness.ai` and the `.com` apex/`www` redirect to it)
 - **Repo**: `github.com/danieletzioni-prog/dudewheresmylikeness` on `main`
-- **Last successful production deploy**: commit `a37247a` ("Fix: button text disappears on hover") — auto-deployed via Vercel on push.
-- **Working tree right now**: `KutcherWidget.astro` and `global.css` modified, **uncommitted**, mid-task. See § Mid-flight work below.
-- **No known production bugs** as of `a37247a`.
-
----
-
-## Mid-flight work (uncommitted)
-
-A multi-part homepage update is in progress. Part 1 of 2 is done locally:
-
-- **Part 1 — DONE locally**: Kutcher widget renamed "The Kutcher Clock" with new title treatment. Widget bumped to 380px wide × `scale-90` (effective ~342px), title on one line in navy blue Fredoka One, caption wraps to 3 lines in 14.875px amber, counter on one line in text-3xl. User approved the visual.
-- **Part 2 — NOT YET STARTED**: editorial intro block (4 paragraphs, pull-quote, ordered list, hyperlinks, bold/italic) between Kutcher Clock hero area and the Map; closing block ("So just like Ashton Kutcher eventually found his car…") below the map. Spec is in the user's chat, not in a file. If picking this up cold, ask the user to re-paste.
-- **Combined commit message** when both parts are done: `"Add Kutcher Clock title; editorial intro with pull-quote, bold anchors, hyperlinks; Dude Where's My Car closer below map"`
-
-**Don't push** until Part 2 is also done — they're going as one commit.
+- **Last successful production deploy**: commit `209b0ed` ("Mobile header fix; scope Kutcher Clock to homepage with persistent dismiss; reset Clock start time") — auto-deployed via Vercel on push.
+- **Working tree right now**: clean (only `docs/HANDOFF.md` itself may be modified by this session's update).
+- **No known production bugs.**
 
 ---
 
@@ -32,9 +20,9 @@ A multi-part homepage update is in progress. Part 1 of 2 is done locally:
 
 ### Stack
 
-- **Framework**: Astro 6 (static-by-default, with one serverless fn)
+- **Framework**: Astro 6 (static-by-default, with two serverless fns)
 - **Styling**: Tailwind CSS v4 via `@tailwindcss/vite` — **uses CSS cascade layers** (see Gotchas)
-- **Hosting**: Vercel (Pro plan not required; free tier sufficient)
+- **Hosting**: Vercel (free tier sufficient)
 - **Adapter**: `@astrojs/vercel` — needed for the serverless `/api/*` routes; the rest of the site is pre-rendered static
 - **Content**: per-state JSON files under `src/content/states/` via Astro Content Collections (typed schema in `src/content.config.ts`)
 - **RSS aggregation**: build-time Node script `scripts/aggregate-feeds.mjs` writes `src/data/aggregated-feed.json`. Daily Vercel cron triggers a redeploy.
@@ -45,7 +33,8 @@ A multi-part homepage update is in progress. Part 1 of 2 is done locally:
 ```
 src/
 ├─ pages/
-│  ├─ index.astro              ← homepage: hero, Map (USMap component), post-mortem teaser, feed preview, email capture
+│  ├─ index.astro              ← homepage: hero, /why CTA, Map (USMap), post-mortem teaser, feed preview, email capture, KutcherWidget (homepage-only)
+│  ├─ why.astro                ← /why — full editorial intro (4 paragraphs, pull-quote, ordered list, hyperlinks)
 │  ├─ post-mortem-terms.astro  ← full sortable/filterable post-mortem table
 │  ├─ feed/index.astro         ← /feed full archive of aggregated items + tag-chip filter
 │  ├─ states/[abbr].astro      ← /states/{abbr} dedicated state page (51 generated)
@@ -53,22 +42,22 @@ src/
 │     ├─ rebuild.ts            ← Vercel cron hits this; POSTs to DEPLOY_HOOK_URL
 │     └─ subscribe.ts          ← /api/subscribe → Buttondown proxy
 ├─ components/
-│  ├─ Header.astro             ← sticky nav (Map / Post-Mortem Terms / Feed)
+│  ├─ Header.astro             ← sticky nav (Map / Why / Post-Mortem Terms / Feed); mobile hamburger toggle below 768px
 │  ├─ Footer.astro             ← disclaimer + LinkedIn credit + footer subscribe form
-│  ├─ KutcherWidget.astro      ← floating bottom-right card (THE Kutcher Clock — see mid-flight work)
+│  ├─ KutcherWidget.astro      ← floating bottom-right card (homepage-only, persistent dismiss via localStorage)
 │  ├─ USMap.astro              ← server-rendered geographic SVG via us-atlas + d3-geo
 │  └─ SubscribeForm.astro      ← reusable, three variants: banded / compact / footer
-├─ layouts/Layout.astro        ← base HTML, head meta (OG/Twitter), header + descriptor + main + footer + KutcherWidget + shared subscribe init <script>
+├─ layouts/Layout.astro        ← base HTML, head meta (OG/Twitter), header + descriptor + main + footer + shared subscribe init <script> (KutcherWidget intentionally NOT here — it lives only on homepage)
 ├─ styles/global.css           ← @theme palette + @layer base element rules + utility classes
 ├─ content/states/*.json       ← 51 state JSONs (50 + DC) — data only
 ├─ content.config.ts           ← Zod schema for state JSON
-├─ config/launch.ts            ← `SITE_LAUNCH_ISO` — anchor for the Kutcher Clock count-up
+├─ config/launch.ts            ← `SITE_LAUNCH_ISO` — anchor for the Kutcher Clock count-up (current: 2026-05-10T22:30:00.000Z)
 ├─ data/
 │  ├─ post-mortem.ts           ← typed array for the post-mortem table
 │  ├─ aggregated-feed.json     ← build artifact, regenerated on every prod build
 │  ├─ state-fips.ts            ← FIPS code → state abbr for USMap
 │  └─ state-grid.ts            ← legacy tile-grid layout (no longer used; safe to delete)
-public/images/                 ← hero.png, og-image.jpg, logo.png, kutcher-placeholder.svg (last is unused now)
+public/images/                 ← hero.png, og-image.jpg, logo.png, kutcher-placeholder.svg (last is unused)
 scripts/aggregate-feeds.mjs    ← RSS aggregator
 docs/
 ├─ RSS_AND_DEPLOY.md           ← cron + env var setup walkthrough
@@ -77,7 +66,7 @@ vercel.json                    ← cron schedule "0 14 * * *" → /api/rebuild
 astro.config.mjs               ← site URL set to https://dudewheresmylikeness.ai; Vercel adapter
 ```
 
-### Categorization scheme (3 categories used + 4th = stub)
+### Categorization scheme
 
 | Cat | Label | Color | States |
 |---|---|---|---|
@@ -94,14 +83,16 @@ astro.config.mjs               ← site URL set to https://dudewheresmylikeness.
 
 | SHA | Message | What it changed |
 |---|---|---|
-| `a37247a` | Fix: button text disappears on hover (CSS cascade-layer bug). | Wrapped element-selector rules in `@layer base` so Tailwind utilities can override on individual buttons. |
+| `209b0ed` | Mobile header fix; scope Kutcher Clock to homepage with persistent dismiss; reset Clock start time. | Mobile hamburger menu under 768px; widget moved from Layout to homepage only; localStorage `kutcherClockDismissed` flag with anti-flash inline script; `SITE_LAUNCH_ISO` reset to `2026-05-10T22:30:00.000Z`; "Daniel Etzioni" descriptor link gets subtle persistent underline. |
+| `d6330e3` | Move editorial intro to /why page; verify email config. | New `/why` route with full editorial; homepage replaced with one-line setup + "Why I made this →" CTA; Dude Where's My Car closing block moved to /why; "Why" added to nav between Map and Post-Mortem Terms; verified Buttondown live. |
+| `9826771` | Add Kutcher Clock title; editorial intro with pull-quote, bold anchors, hyperlinks; Dude Where's My Car closer below map. | "The Kutcher Clock" title in widget (380px wide × scale-90); originally placed editorial intro between hero and Map (later moved to /why in `d6330e3`); also wrapped element selectors in @layer base to fix h2 cascade-layer bug. |
+| `a37247a` | Fix: button text disappears on hover (CSS cascade-layer bug). | Wrapped `a` and `a:hover` in `@layer base` so Tailwind utilities can override on individual buttons. |
 | `b17447e` | Remove featured section; May 2026 sweep updates for TN, CA, FL. | Deleted `featured-stories.json`, stripped featured rendering, added denylist + near-dup collapse to aggregator, applied AI Personhood Act / pending CA bills / FL AI Bill of Rights died-twice content; bumped lastVerified on 3 states. |
-| `d01ef53` | Move post-mortem table to its own page, replace homepage with teaser, update Kutcher copy. | New `/post-mortem-terms` route; homepage replaced with teaser card; nav added "Post-Mortem Terms"; Kutcher copy changed to "This site has used Ashton Kutcher's likeness without permission for:". |
+| `d01ef53` | Move post-mortem table to its own page, replace homepage with teaser, update Kutcher copy. | New `/post-mortem-terms` route; homepage replaced with teaser card; nav added "Post-Mortem Terms"; Kutcher copy changed. |
 | `da81d28` | Add Open Graph + Twitter Card meta tags for social sharing. | Set `astro.config.mjs` site URL; generated optimized og-image.jpg (1200×675); Layout.astro emits canonical + og:* + twitter:* tags. |
-| `07b16af` | Restore us-atlas + topojson-client + d3-geo deps stripped from package.json. | Re-added the three runtime deps for USMap that had been silently removed from package.json (locally still in node_modules → builds passed locally but Vercel cold-install failed). |
+| `07b16af` | Restore us-atlas + topojson-client + d3-geo deps stripped from package.json. | Re-added the three runtime deps for USMap that had been silently removed from package.json. |
 | `8759343` | Add Buttondown email capture in three placements (preview mode pending API key). | Three forms (banded / compact / footer), shared init in Layout.astro, `/api/subscribe` Vercel function, simulation mode if no key. |
 | `102f467` | Major site update: 4-category schema, 51 state pages, post-mortem table, footer disclaimer, RSS feed aggregation. Local-only, ready to deploy. | Schema overhaul, 19 verified states + 32 Cat 4 stubs + DC, USMap geographic SVG, post-mortem table with sort/filter, RSS aggregator with 14 sources, Vercel cron config, full docs. |
-| `3b80df0` | feat: initial v0.1 scaffold for dudewheresmylikeness.com | Initial Astro+Tailwind+MDX scaffold per the original BRIEF.md. |
 
 ---
 
@@ -110,19 +101,19 @@ astro.config.mjs               ← site URL set to https://dudewheresmylikeness.
 ### High value, defined
 
 - **Maryland** — held pending Gov. Wes Moore signature confirmation on **SB 8** (deepfake identity-fraud) and **SB 141** (election deepfakes). When confirmed, **categorization stays at Cat 4** but `aiCoverage` and `whatsInteresting` need updating per the suggested content in `state-updates-may-2026.md` (see § Where verified content lives). Apply only after verifying signing on `governor.maryland.gov`.
-- **Part 2 of mid-flight work** — editorial intro + closing block (see § Mid-flight work).
 
 ### Operational
 
 - **Buttondown API key rotation** — the current key was pasted in chat during initial setup. Should be rotated and the new one set via `vercel env add BUTTONDOWN_API_KEY production`, then `vercel --prod`.
 - **Custom-domain canonical mismatch (low priority)** — Vercel currently serves `www.dudewheresmylikeness.ai` as canonical (apex 307s to www). The OG/canonical metadata in `Layout.astro` uses the apex (`https://dudewheresmylikeness.ai`). Either flip Vercel to apex-canonical (cleaner) or update `astro.config.mjs` `site` to include `www`. Not urgent — both URLs work.
-- **Google News URL display** — items pulled from GN keyword queries have wrapped `news.google.com/rss/articles/{id}` URLs in the JSON. They JS-redirect on click in browsers (work fine), but they're ugly in the data. Modern GN encoding can't be unwrapped server-side without protobuf decoding tricks. Live with it; the **denylist runs against `<source url>` from the GN RSS, not the wrapper URL**, so quality filtering is correct.
+- **Google News URL display** — items pulled from GN keyword queries have wrapped `news.google.com/rss/articles/{id}` URLs in the JSON. They JS-redirect on click in browsers (work fine), but they're ugly in the data. Modern GN encoding can't be unwrapped server-side without protobuf decoding tricks. The denylist runs against `<source url>` from the GN RSS, not the wrapper URL, so quality filtering is correct.
 
 ### Nice-to-have
 
 - `src/data/state-grid.ts` is leftover from the early tile-grid map; now unused. Safe to delete.
 - `public/images/kutcher-placeholder.svg` is leftover from when the widget showed a placeholder image. Now unused. Safe to delete.
 - 24 of 32 Cat 4 states still have generic stub content. Add state-specific AI statute citations as research yields them.
+- Mobile pages other than the homepage haven't been visually scanned at narrow widths. The Header's hamburger fix applies site-wide, but content sections on `/why`, `/post-mortem-terms`, `/feed`, `/states/[abbr]` should be reviewed on a real phone.
 
 ---
 
@@ -130,7 +121,7 @@ astro.config.mjs               ← site URL set to https://dudewheresmylikeness.
 
 The user maintains research docs **outside the repo** on their Desktop. They paste relevant chunks into Claude Code when applying updates.
 
-- **`/Users/danieletzioni/Desktop/state-updates-may-2026.md`** — May 2026 sweep instructions for TN, CA, FL plus Maryland-pending. Format: per-state instructions specifying what to append to `whatsInteresting` and what to add to `primarySources`. **The doc is a transcribed-instruction format, not raw content** — read carefully.
+- **`/Users/danieletzioni/Desktop/state-updates-may-2026.md`** — May 2026 sweep instructions for TN, CA, FL plus Maryland-pending. Format: per-state instructions specifying what to append to `whatsInteresting` and what to add to `primarySources`.
 - **Original verified state content (May 4, 2026 batch)** — pasted in chat during the May 4 commit (`102f467`); not saved as a standalone doc. The 19 priority states (Cat 1, 2, 3) were populated from that paste.
 - **Future updates** — expect more `state-updates-{month}-{year}.md` files on the user's Desktop. Always paste the doc into Claude Code chat (don't try to read it from outside the repo).
 
@@ -148,14 +139,16 @@ The user maintains research docs **outside the repo** on their Desktop. They pas
 ### UI
 
 - **No featured/curation layer** in the feed — the user explicitly removed it on May 9 and doesn't want it back. The aggregator + chronological order does the work.
-- **Hyperlinks**: external links open `target="_blank" rel="noopener noreferrer"`. The footer LinkedIn link and the editorial intro hyperlinks all follow this.
+- **Hyperlinks**: external links open `target="_blank" rel="noopener noreferrer"`. The footer LinkedIn link, the descriptor LinkedIn link, and the editorial intro hyperlinks all follow this.
 - **No pop-ups, no modals, no exit-intent, no floating bars** for email capture — three inline placements only (banded on homepage, compact on each state page tagged `via:{state-slug}`, single line in footer).
 - **State page tag for Buttondown** is `via:{state-name-lowercased-hyphenated}` — e.g., `via:tennessee`, `via:north-carolina`, `via:district-of-columbia`. Set in `src/pages/states/[abbr].astro`.
-- **"Report a correction"** mailto link at the bottom of every state page goes to `hello@dudewheresmylikeness.com`. Forwarding for that address is set up at Spaceship.
+- **"Report a correction"** mailto link at the bottom of every state page goes to `hello@dudewheresmylikeness.com`. Forwarding for that address is set up at Spaceship. The user keeps the `.com` for email even though the site is `.ai` — no plan to migrate.
+- **Kutcher Clock**: lives only on `/` (the homepage). Persistent dismiss is wired to `localStorage.kutcherClockDismissed === "true"`. An anti-flash inline `<script>` in `index.astro` runs synchronously *before* the widget HTML is parsed and injects `display: none` if the flag is set, preventing flash on reload. Remember localStorage is **per-origin** — dismissing on `localhost:4321` does NOT dismiss on `www.dudewheresmylikeness.ai`.
+- **Mobile header**: under 768px, the desktop nav is replaced by a hamburger toggle (44×44px tap target). Hamburger button has `md:hidden`; desktop nav has `hidden md:block`; mobile nav panel toggles via JS by adding/removing `hidden`. Panel auto-closes on link click + Escape key.
 
 ### CSS
 
-- **All element-selector rules (html, body, h1-h4, p, a, etc.) MUST be inside `@layer base`** in `global.css`. Otherwise they're unlayered and outrank ALL Tailwind utility classes (cascade-layer ordering trumps specificity). This bit us twice — once for `text-white` button color, once for `text-3xl` overriding the global h2 size.
+- **All element-selector rules (html, body, h1–h4, p, a, etc.) MUST be inside `@layer base`** in `global.css`. Otherwise they're unlayered and outrank ALL Tailwind utility classes (cascade-layer ordering trumps specificity). This bit us three times — `text-white` button color, `text-3xl` overriding the global h2 size, and again on the Kutcher Clock title sizing.
 - **Class-based selectors (`.poster-card`, `.poster-bar`, `.display`, `.cloud`, `.state-path`, etc.) can stay unlayered** — they don't conflict with Tailwind utilities.
 - **Color tokens** are CSS variables defined in the `@theme` block: `--color-blue` / `--color-orange` / `--color-orange-deep` / `--color-ink` / `--color-mustard` / `--color-cat-1..4` / etc. Always reference via `var(...)` or via Tailwind arbitrary values like `text-[var(--color-blue)]`.
 
@@ -169,8 +162,10 @@ The user maintains research docs **outside the repo** on their Desktop. They pas
 4. **Vercel env vars don't propagate to existing deployments**: after adding/changing an env var, you must redeploy (`vercel --prod --yes`) for serverless functions to see it. Caught us with `DEPLOY_HOOK_URL`.
 5. **Sensitive Vercel env vars can't be pulled locally**: `vercel env pull` returns empty values for vars marked sensitive. Test endpoint behavior, not values.
 6. **Chrome MCP allowlist**: only localhost and a handful of dev domains. **vercel.com, github.com, spaceship.com, buttondown.email, dudewheresmylikeness.ai are all blocked.** Cannot drive these via the browser tool. Use CLI (Vercel CLI is logged in) or curl.
-7. **Tailwind v4 cascade layers**: see "All element-selector rules MUST be inside `@layer base`" above. This is the #1 cause of "why isn't my CSS applying" surprises on this project.
-8. **Astro `bash` and `cd`**: my Bash tool's working directory persists across calls but resets if a previous call errored. Re-`cd` or use absolute paths to be safe.
+7. **Chrome MCP `resize_window` doesn't change the page viewport** in this environment — it resizes the OS window but `window.innerWidth` and matchMedia stay at 1512px. **For mobile rendering checks: code-level inspection of class strings, or inject CSS that simulates mobile state, or have the user test on a real phone / DevTools.** Don't rely on `resize_window` to actually mobile-emulate.
+8. **Tailwind v4 cascade layers**: see "All element-selector rules MUST be inside `@layer base`" above. This is the #1 cause of "why isn't my CSS applying" surprises on this project.
+9. **Astro `bash` and `cd`**: my Bash tool's working directory persists across calls but resets if a previous call errored. Re-`cd` or use absolute paths to be safe.
+10. **localStorage is per-origin per-browser**: dismissing the Kutcher Clock on `localhost:4321` does not affect `www.dudewheresmylikeness.ai` — different origins. Same browser ≠ same storage. Tell the user explicitly if they're confused why state doesn't sync between dev and live.
 
 ---
 
@@ -199,6 +194,13 @@ git push origin main                  # triggers Vercel auto-deploy
 # Live verification
 curl -sS -o /dev/null -w "%{http_code}\n" https://www.dudewheresmylikeness.ai/
 curl -sS https://www.dudewheresmylikeness.ai/api/rebuild   # expect 401 (CRON_SECRET enforced)
+
+# Verify Kutcher Clock scope across routes
+for path in / /why /post-mortem-terms /feed /states/tn; do
+  hits=$(curl -sS "https://www.dudewheresmylikeness.ai$path" | grep -c '<aside id="kutcher-widget"')
+  printf "%-30s widget renders: %s\n" "$path" "$hits"
+done
+# Expected: / → 1; everything else → 0
 ```
 
 ---
@@ -212,6 +214,8 @@ curl -sS https://www.dudewheresmylikeness.ai/api/rebuild   # expect 401 (CRON_SE
 - **"How do I add an RSS source?"** — append to `SOURCES` array in `scripts/aggregate-feeds.mjs`. Verify it returns valid RSS first: `curl -sSL <url> | head -50`.
 - **"How do I check the cron actually runs?"** — Vercel dashboard → project → Observability → Cron Jobs (run history shows past invocations).
 - **"How do I verify Buttondown is working?"** — `curl -X POST https://www.dudewheresmylikeness.ai/api/subscribe -H "content-type: application/json" -d '{"email":"deploy-check@example.com","tags":["test"]}'`. Should return `{"ok":true}` (no `simulated:true`). Then delete the test subscriber via the Buttondown API.
+- **"How do I reset the Kutcher Clock starting time?"** — edit `SITE_LAUNCH_ISO` in `src/config/launch.ts`, push.
+- **"User says clock is dismissed locally but visible on live"** — that's expected. localStorage is per-origin. They need to dismiss on the live origin once. Not a bug.
 
 ---
 
