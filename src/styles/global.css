@@ -82,17 +82,28 @@ h3 { font-size: 1.5rem; }
 
 p { margin: 0 0 1rem; }
 
-a {
-  color: var(--color-blue);
-  text-decoration: underline;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--color-orange);
-  transition: color 120ms ease, text-decoration-color 120ms ease;
-}
-a:hover {
-  color: var(--color-orange-deep);
-  text-decoration-color: var(--color-blue);
+/* Anchor rules live in @layer base so Tailwind utility classes
+ * (`.text-white`, `.text-[var(--color-blue)]`, etc.) — which live in
+ * @layer utilities — can override them. Without an explicit layer, these
+ * rules were UNLAYERED, and unlayered rules beat layered rules in the
+ * cascade regardless of specificity. That made every <a> styled as a
+ * button render with blue text instead of the intended `text-white`,
+ * and on hover the text turned orange-deep — matching the orange-deep
+ * hover background → invisible label. */
+@layer base {
+  a {
+    color: var(--color-blue);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-orange);
+    transition: color 120ms ease, text-decoration-color 120ms ease;
+  }
+  a:hover,
+  a:focus-visible {
+    color: var(--color-orange-deep);
+    text-decoration-color: var(--color-blue);
+  }
 }
 
 .display { font-family: var(--font-display); letter-spacing: 0.005em; line-height: 1; }
