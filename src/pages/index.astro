@@ -43,26 +43,14 @@ const categoryClassName: Record<number, string> = {
     </svg>
 
     <div class="relative max-w-[1400px] mx-auto px-4 md:px-8">
-      {/* TODO: drop the final poster at public/images/hero.png. If that asset
-          is missing, the <img> below will alt-fallback to the placeholder block. */}
       <picture class="block">
         <img
-          src="/images/hero.png"
-          alt="dudewheresmylikeness.com — AI-generated riff on the Dude, Where's My Car? movie poster"
+          src="/images/Hero2.jpg"
+          alt="dudewheresmylikeness.ai — AI-generated riff on the Dude, Where's My Car? movie poster, with phones showing fake AI-Kutcher scam ads"
           class="block w-full h-auto mx-auto"
-          onerror="this.style.display='none'; document.getElementById('hero-fallback')?.removeAttribute('hidden');"
           fetchpriority="high"
         />
       </picture>
-      <div id="hero-fallback" hidden class="mx-auto max-w-4xl poster-card px-8 py-16 text-center">
-        <p class="poster-bar">Hero image missing</p>
-        <h2 class="mt-5 display text-4xl">
-          <span class="text-[var(--color-orange)]">dude</span><span class="text-[var(--color-blue)]">, where's my likeness?</span>
-        </h2>
-        <p class="mt-5 text-[var(--color-muted)]">
-          Drop the final hero image at <code class="text-[var(--color-blue)]">/public/images/hero.png</code> and it'll appear here.
-        </p>
-      </div>
 
       <div class="mt-8 flex justify-center">
         <a
