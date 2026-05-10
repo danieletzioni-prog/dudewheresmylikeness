@@ -1,7 +1,6 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import KutcherWidget from '../components/KutcherWidget.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -63,7 +62,7 @@ const absoluteOgImage = new URL(ogImage, Astro.site).toString();
           href="https://www.linkedin.com/in/daniel-etzioni/"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[var(--color-ink)] no-underline hover:underline decoration-[var(--color-ink)] underline-offset-2"
+          class="text-[var(--color-ink)] underline decoration-[var(--color-muted)] decoration-1 underline-offset-[3px] hover:decoration-[var(--color-ink)] hover:decoration-2"
         >Daniel Etzioni</a>
       </p>
     </div>
@@ -71,7 +70,6 @@ const absoluteOgImage = new URL(ogImage, Astro.site).toString();
       <slot />
     </main>
     <Footer />
-    <KutcherWidget />
 
     {/* Shared init for all <SubscribeForm> instances on the page. */}
     <script is:inline>

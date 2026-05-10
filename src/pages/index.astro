@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import USMap from '../components/USMap.astro';
 import SubscribeForm from '../components/SubscribeForm.astro';
+import KutcherWidget from '../components/KutcherWidget.astro';
 import aggregated from '../data/aggregated-feed.json';
 
 // Homepage shows the 6 most recent; the full archive lives at /feed.
@@ -259,4 +260,22 @@ const categoryClassName: Record<number, string> = {
       </div>
     </div>
   </section>
+
+  {/* The Kutcher Clock — homepage only. The inline script below runs
+      synchronously before the widget HTML is parsed and injects a style
+      that hides the widget if the visitor previously dismissed it.
+      That keeps dismissed visitors from seeing the widget flash on
+      reload. The widget's own dismiss-button handler writes the
+      localStorage flag (see KutcherWidget.astro). */}
+  <script is:inline>
+    try {
+      if (typeof localStorage !== 'undefined' &&
+          localStorage.getItem('kutcherClockDismissed') === 'true') {
+        const s = document.createElement('style');
+        s.textContent = '#kutcher-widget{display:none!important}';
+        document.head.appendChild(s);
+      }
+    } catch (e) { /* private mode etc. — fall back to showing the widget */ }
+  </script>
+  <KutcherWidget />
 </Layout>

@@ -66,7 +66,9 @@ import { SITE_LAUNCH_ISO } from '../config/launch';
       e.stopPropagation();
       el.remove();
       clearInterval(interval);
-      // Not persisted — the bit doesn't work if you can kill it forever.
+      // Persist the dismissal — see the anti-flash inline script in
+      // src/pages/index.astro that reads this key on subsequent loads.
+      try { localStorage.setItem('kutcherClockDismissed', 'true'); } catch {}
     });
 
     // On landing: hide while hero is in view, fade in once scrolled past.

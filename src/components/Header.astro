@@ -10,25 +10,74 @@ const links = [
   { href: '/post-mortem-terms', label: 'Post-Mortem Terms', active: postMortemActive },
   { href: feedActive ? '/feed' : '/#feed', label: 'Feed', active: feedActive },
 ];
+
+// Reused twice (desktop list + mobile panel) — define once to keep them in sync.
+const linkClass = (active: boolean) => [
+  'no-underline font-sans font-extrabold uppercase tracking-[0.12em] text-xs md:text-sm px-3.5 py-2 rounded-full border-2 transition-all',
+  active
+    ? 'bg-[var(--color-orange)] text-white border-[var(--color-orange-deep)] shadow-[0_2px_0_0_var(--color-orange-deep)]'
+    : 'text-[var(--color-blue)] border-transparent hover:border-[var(--color-blue)] hover:bg-white',
+];
 ---
 <header class="sticky top-0 z-40 border-b border-[var(--color-blue)]/20 bg-white/70 backdrop-blur-md">
-  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between gap-6">
-    <a href="/" class="no-underline text-[var(--color-ink)]">
-      <span class="font-sans font-medium text-sm md:text-base leading-snug">
-        Your face. Your rights. Fifty different answers.
-      </span>
-    </a>
-    <nav>
-      <ul class="flex items-center gap-1 md:gap-2">
+  <div class="max-w-6xl mx-auto px-5 py-3">
+    <div class="flex items-center justify-between gap-4">
+      <a
+        href="/"
+        class="no-underline text-[var(--color-ink)] flex-1 min-w-0 md:flex-initial"
+      >
+        <span class="font-sans font-medium text-sm md:text-base leading-snug block">
+          Your face. Your rights. Fifty different answers.
+        </span>
+      </a>
+
+      {/* Hamburger toggle — mobile only */}
+      <button
+        id="mobile-nav-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        class="md:hidden flex-none w-11 h-11 inline-flex items-center justify-center rounded-full border-2 border-[var(--color-blue)]/40 text-[var(--color-blue)] hover:bg-white hover:border-[var(--color-blue)] transition-colors"
+      >
+        {/* Hamburger icon, swaps to X via CSS when [aria-expanded="true"] */}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true" class="hamburger-icon">
+          <line x1="4" y1="7"  x2="20" y2="7"  class="hamburger-line top"/>
+          <line x1="4" y1="12" x2="20" y2="12" class="hamburger-line mid"/>
+          <line x1="4" y1="17" x2="20" y2="17" class="hamburger-line bot"/>
+        </svg>
+      </button>
+
+      {/* Desktop nav — hidden on mobile */}
+      <nav class="hidden md:block" aria-label="Main navigation">
+        <ul class="flex items-center gap-1 md:gap-2">
+          {links.map((link) => (
+            <li>
+              <a href={link.href} class:list={linkClass(link.active)}>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    {/* Mobile nav panel — hidden by default; toggled by JS */}
+    <nav
+      id="mobile-nav"
+      aria-label="Main navigation (mobile)"
+      class="md:hidden hidden mt-3 pt-3 border-t border-[var(--color-blue)]/15"
+    >
+      <ul class="grid gap-2">
         {links.map((link) => (
           <li>
             <a
               href={link.href}
               class:list={[
-                'no-underline font-sans font-extrabold uppercase tracking-[0.12em] text-xs md:text-sm px-3.5 py-2 rounded-full border-2 transition-all',
+                'no-underline font-sans font-extrabold uppercase tracking-[0.12em] text-sm px-4 py-3 rounded-full border-2 transition-all flex items-center min-h-[44px]',
                 link.active
-                  ? 'bg-[var(--color-orange)] text-white border-[var(--color-orange-deep)] shadow-[0_2px_0_0_var(--color-orange-deep)]'
-                  : 'text-[var(--color-blue)] border-transparent hover:border-[var(--color-blue)] hover:bg-white',
+                  ? 'bg-[var(--color-orange)] text-white border-[var(--color-orange-deep)]'
+                  : 'text-[var(--color-blue)] border-[var(--color-blue)]/30 hover:bg-white',
               ]}
             >
               {link.label}
@@ -39,3 +88,51 @@ const links = [
     </nav>
   </div>
 </header>
+
+{/* Hamburger → X morph when expanded */}
+<style>
+  .hamburger-line { transition: transform 180ms ease, opacity 120ms ease; transform-origin: center; }
+  #mobile-nav-toggle[aria-expanded="true"] .hamburger-line.top { transform: translateY(5px) rotate(45deg); }
+  #mobile-nav-toggle[aria-expanded="true"] .hamburger-line.mid { opacity: 0; }
+  #mobile-nav-toggle[aria-expanded="true"] .hamburger-line.bot { transform: translateY(-5px) rotate(-45deg); }
+</style>
+
+<script is:inline>
+  (() => {
+    const init = () => {
+      const btn = document.getElementById('mobile-nav-toggle');
+      const panel = document.getElementById('mobile-nav');
+      if (!btn || !panel) return;
+
+      const setOpen = (open) => {
+        btn.setAttribute('aria-expanded', String(open));
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        panel.classList.toggle('hidden', !open);
+      };
+
+      btn.addEventListener('click', () => {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+
+      // Close after clicking any nav link inside the mobile panel — required
+      // for same-page anchor jumps like /#map (no page reload to auto-close).
+      panel.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => setOpen(false));
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
+          setOpen(false);
+          btn.focus();
+        }
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
