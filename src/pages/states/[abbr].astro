@@ -108,6 +108,11 @@ const correctionSubject = encodeURIComponent(`Correction: ${state.name}`);
           Last verified: <span class="text-[var(--color-ink)]">{state.lastVerified}</span>
         </p>
       )}
+      {state.lastRefreshCheck && (
+        <p class="text-[var(--color-muted)] uppercase tracking-[0.15em] font-bold">
+          Last refresh check: <span class="text-[var(--color-ink)]">{state.lastRefreshCheck}</span>
+        </p>
+      )}
       <p class="text-[var(--color-muted)]">
         Spotted an error?{' '}
         <a

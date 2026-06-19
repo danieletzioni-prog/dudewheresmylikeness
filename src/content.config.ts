@@ -26,6 +26,7 @@ const states = defineCollection({
     /** Array of citation strings. May contain markdown-style [text](url) links. */
     primarySources: z.array(z.string()).default([]),
     lastVerified: z.string().optional(),
+    lastRefreshCheck: z.string().optional(),
   }),
 });
 
