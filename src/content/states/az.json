@@ -5,12 +5,13 @@
   "tooltip": "Arizona — Cat 4: No codified statutory right of publicity. Common-law misappropriation may apply.",
   "rightOfPublicity": "Common law only. Arizona has not enacted a codified general right-of-publicity statute. Common-law misappropriation may apply — elements vary, but generally: defendant appropriated plaintiff's identity for commercial value, plaintiff is identifiable, defendant received a benefit. Consult an attorney for state-specific application.",
   "postMortem": "No codified post-mortem term. Descendibility uncertain at common law.",
-  "aiCoverage": "A.R.S. § 16-1023 (HB 2394, 2024, election digital impersonation). A.R.S. § 13-1425 (NCII).",
+  "aiCoverage": "A.R.S. § 16-1023 (HB 2394, 2024, election digital impersonation). A.R.S. § 13-1425 (NCII; amended by SB 1462, 2025 Ariz. Sess. Laws Ch. 106, effective Sept. 26, 2025) — adds \"computer-generated pictorial representation\" defined as an image \"created or modified by means of computer software, artificial intelligence or other digital editing tools.\" Reasonable-expectation-of-privacy element does not apply to computer-generated representations. Class 1 misdemeanor. Carve-out for images in the public interest (scientific, educational, newsworthy, public concern). Primary source: [2025 Ariz. Sess. Laws Ch. 106](https://www.azleg.gov/legtext/57leg/1r/laws/0106.htm).",
   "remedy": "Common-law misappropriation suit. Federal claims available regardless: Lanham Act § 43(a) false endorsement, defamation, and federal NCII statutes apply nationwide.",
-  "whatsInteresting": "Arizona hasn't built statutory likeness protection. AI-specific statutes exist for narrow areas (election deepfakes, NCII, etc.) but the general right-of-publicity base is common law only.",
+  "whatsInteresting": "Arizona hasn't built statutory likeness protection. AI-specific statutes exist for narrow areas (election deepfakes, NCII, etc.) but the general right-of-publicity base is common law only. In 2025, SB 1462 (Ch. 106, effective Sept. 26, 2025) amended A.R.S. § 13-1425 to explicitly cover \"computer-generated pictorial representations\" created by AI or digital editing tools — a meaningful NCII expansion, though the general ROP base remains common law. A broader bill, HB 2133 (the \"Protect Act,\" 57th Legislature 2nd Regular Session, 2026), would have added \"realistic pictorial representation\" and \"synthetic depiction\" language and created a new § 44-7302, but it remained unsigned when the session adjourned sine die on June 13, 2026 — do not cite as current law.",
   "primarySources": [
     "Common-law cases vary by state; consult an attorney licensed in Arizona.",
-    "Federal statutes and any state AI-specific statutes listed above."
+    "Federal statutes and any state AI-specific statutes listed above.",
+    "[A.R.S. § 13-1425 as amended by SB 1462, 2025 Ariz. Sess. Laws Ch. 106](https://www.azleg.gov/legtext/57leg/1r/laws/0106.htm)"
   ],
-  "lastVerified": "2026-05-04"
+  "lastVerified": "2026-06-18"
 }
