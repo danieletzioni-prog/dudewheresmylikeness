@@ -5,14 +5,14 @@
   "tooltip": "Rhode Island — Cat 2: Privacy-tort statute, no post-mortem term. Two 2025 deepfake statutes (NCII + election).",
   "rightOfPublicity": "Limited — privacy-tort posture. R.I. Gen. Laws § 9-1-28 (commercial misappropriation) and § 9-1-28.1 (Prosser privacy torts including appropriation). Covers name and image misappropriation.",
   "postMortem": "No codified post-mortem term.",
-  "aiCoverage": "Yes — two 2025 enactments. 2025-H 5046 / S 0136 (deepfake-NCII, signed July 2, 2025) and 2025-H 5872 / S 0816 (election synthetic media disclosure, signed July 2025).",
+  "aiCoverage": "Yes — two 2025 enactments. R.I. Gen. Laws § 11-64-3 (deepfake-NCII; amended by 2025-H 5046 / 2025-S 0136, P.L. 2025 chs. 429 & 430, § 1, effective July 2, 2025) — extends the prohibition on unauthorized dissemination of sexually explicit images to include \"any image created by a digital device or altered by digitization.\" R.I. Gen. Laws §§ 17-30-1 to 17-30-4 (election synthetic media disclosure; new Chapter 17-30 added by 2025-H 5872 / 2025-S 0816, P.L. 2025 chs. 409 & 410, § 1, effective July 2, 2025) — prohibits candidates, PACs, party committees, and independent-expenditure entities from distributing media they know or should know is \"deceptive and fraudulent synthetic media\" within 90 days of an election unless it carries an AI-disclosure label.",
   "remedy": "Civil suit under § 9-1-28 or § 9-1-28.1 for actual damages plus equitable relief. *Mendosa v. Time, Inc.*, 678 F. Supp. 967 (D.R.I. 1988) and *Leddy v. Narragansett Television L.P.*, 843 A.2d 481 (R.I. 2004) are the controlling cases.",
-  "whatsInteresting": "Rhode Island has the same structural weakness as Massachusetts — privacy-tort statute, no descendibility, no post-mortem — but the 2025 legislature passed two AI-specific statutes back-to-back, which signals where the state is heading. For practical purposes, if you're a Rhode Island resident and your face shows up in AI-generated explicit content or a fake political ad, you have specific statutory hooks. For broader commercial misuse, you're in privacy-tort territory.",
+  "whatsInteresting": "Rhode Island has the same structural weakness as Massachusetts — privacy-tort statute, no descendibility, no post-mortem — but the 2025 legislature passed two AI-specific statutes back-to-back, which signals where the state is heading. For practical purposes, if you're a Rhode Island resident and your face shows up in AI-generated explicit content or a fake political ad, you have specific statutory hooks. For broader commercial misuse, you're in privacy-tort territory. Codification now confirmed: the NCII deepfake provision landed at § 11-64-3 (P.L. 2025 chs. 429 & 430), and the election synthetic-media disclosure regime is a new Chapter 17-30 (§§ 17-30-1 through 17-30-4, P.L. 2025 chs. 409 & 410). Both effective July 2, 2025.",
   "primarySources": [
     "R.I. Gen. Laws § 9-1-28 — [webserver.rilegislature.gov](http://webserver.rilegislature.gov)",
     "R.I. Gen. Laws § 9-1-28.1",
-    "2025-H 5046 / S 0136 (deepfake-NCII)",
-    "2025-H 5872 / S 0816 (election synthetic media)"
+    "[R.I. Gen. Laws § 11-64-3 as amended by P.L. 2025 chs. 429 & 430](https://webserver.rilegislature.gov/Billtext25/SenateText25/S0136.pdf)",
+    "[R.I. Gen. Laws Chapter 17-30 (§§ 17-30-1 to 17-30-4), P.L. 2025 chs. 409 & 410](https://webserver.rilegislature.gov/BillText25/HouseText25/H5872.htm)"
   ],
-  "lastVerified": "2026-05-04"
+  "lastVerified": "2026-06-18"
 }
